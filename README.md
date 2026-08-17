@@ -31,10 +31,11 @@ curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | 
 
 ## First run
 
-Koder asks for an aiXplain API key the first time it starts. Create one at
-[studio.aixplain.com/settings/keys](https://studio.aixplain.com/settings/keys) and paste
-it in — that single key unlocks the model catalogue on your account. The key is stored
-under `~/.koder`, never in your project.
+Koder asks for an aiXplain API key the first time it starts.
+
+Sign in at [app.aixplain.com](https://app.aixplain.com/), open **Integrations → API
+keys**, create a key and paste it in. That single key unlocks the model catalogue on
+your account. It is stored under your home directory, never in your project.
 
 If you would rather use a different provider, choose **Use a different provider** on the
 same screen, or run `koder providers` later.
