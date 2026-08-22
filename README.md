@@ -1,10 +1,38 @@
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/koder-mark-dark-theme.svg">
+  <img alt="Koder" src="docs/assets/koder-mark.svg" width="96" height="96">
+</picture>
+
 # Koder
 
-Koder is aiXplain's agentic coding environment. It runs in your terminal, reads and
-edits the project you point it at, runs your tools, and works against the models in
-your aiXplain account.
+**aiXplain's agentic coding environment — your terminal, your tools, your models.**
+
+[![Release](https://img.shields.io/github/v/release/aixplain/koder?color=ec5b2b&label=release&sort=semver)](https://github.com/aixplain/koder/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/aixplain/koder/total?color=ec5b2b&label=downloads)](https://github.com/aixplain/koder/releases)
+[![Platforms](https://img.shields.io/badge/platforms-macOS%20·%20Linux%20·%20Windows-ec5b2b)](#platform-support)
+[![License](https://img.shields.io/github/license/aixplain/koder?color=ec5b2b)](LICENSE)
+
+[Install](#install) · [First run](#first-run) · [Using it](#using-it) · [Upgrading](#upgrading-and-removing) · [Platforms](#platform-support) · [Configuration](#configuration)
+
+</div>
+
+Koder runs in your terminal, reads and edits the project you point it at, runs your
+tools, and works against the models in your aiXplain account.
 
 ![Koder running in a terminal](docs/koder.png)
+
+## Highlights
+
+|   |   |
+|---|---|
+| **🧠 Agentic by default** | Describe what you want in plain language. Koder reads the files it needs, proposes edits, and runs commands — with your approval. |
+| **🔌 Your aiXplain models** | One API key unlocks the model catalogue on your account. Prefer another provider? Bring your own. |
+| **💻 Terminal-native** | A fast, keyboard-driven TUI — plus a headless server (`koder serve`) and a browser interface (`koder web`). |
+| **🧩 MCP & multi-agent** | Connect MCP servers, run subagents, and switch agents with a keypress. |
+| **📥 Bring your history** | Import past sessions from opencode, Claude Code, and Cursor with `koder import`. |
+| **🔐 Signed & notarized** | macOS builds carry aiXplain's Developer ID signature and Apple notarization. Single binary, no root. |
 
 ## Install
 
@@ -25,7 +53,7 @@ shell's PATH. It does not need root, and it touches nothing else.
 To install a specific version, or to skip the PATH edit:
 
 ```sh
-curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --version 0.2.3
+curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --version 0.3.0
 curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --no-modify-path
 ```
 
@@ -52,6 +80,7 @@ A few things worth knowing early:
 | `tab` | switch agents |
 | `ctrl+p` | command palette |
 | `koder run "…"` | one-shot: answer and exit, useful in scripts |
+| `koder import` | bring sessions over from opencode, Claude Code, or Cursor |
 | `koder models` | list the models available to your account |
 | `koder stats` | token usage and spend so far |
 
@@ -63,7 +92,7 @@ Run `koder --help` for the full list.
 
 ```sh
 koder upgrade       # move to the newest release
-koder upgrade 0.2.3 # or a specific one
+koder upgrade 0.3.0 # or a specific one
 koder uninstall     # remove the binary and everything under ~/.koder
 ```
 
@@ -118,13 +147,8 @@ reason.
 | `KODER_RELEASE_REPO` | install and upgrade from a different repository |
 | `KODER_DIST_URL` | install and upgrade from a mirror instead of GitHub |
 
-Nothing is written inside your project.
+---
 
-## Help
-
-- Documentation: [aixplain.com/docs](https://aixplain.com/docs)
-- Questions and bug reports: [open an issue](https://github.com/aixplain/koder/issues)
-
-## License
-
-MIT. See [LICENSE](LICENSE).
+<div align="center">
+<sub>Built by <a href="https://aixplain.com">aiXplain</a> · <a href="https://github.com/aixplain/koder/releases">Releases</a> · <a href="LICENSE">MIT License</a></sub>
+</div>
