@@ -53,7 +53,7 @@ shell's PATH. It does not need root, and it touches nothing else.
 To install a specific version, or to skip the PATH edit:
 
 ```sh
-curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --version 0.3.0
+curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --version 0.2.4
 curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --no-modify-path
 ```
 
@@ -92,7 +92,7 @@ Run `koder --help` for the full list.
 
 ```sh
 koder upgrade       # move to the newest release
-koder upgrade 0.3.0 # or a specific one
+koder upgrade 0.2.4 # or a specific one
 koder uninstall     # remove the binary and everything under ~/.koder
 ```
 
