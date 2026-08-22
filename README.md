@@ -20,16 +20,17 @@ tools, and works against the models in your aiXplain account.
 
 ![Koder running in a terminal](docs/koder.png)
 
-## Highlights
+## Why Koder
 
-|   |   |
-|---|---|
-| **🧠 Agentic by default** | Describe what you want in plain language. Koder reads the files it needs, proposes edits, and runs commands — with your approval. |
-| **🔌 Your aiXplain models** | One API key unlocks the model catalogue on your account. Prefer another provider? Bring your own. |
-| **💻 Terminal-native** | A fast, keyboard-driven TUI — plus a headless server (`koder serve`) and a browser interface (`koder web`). |
-| **🧩 MCP & multi-agent** | Connect MCP servers, run subagents, and switch agents with a keypress. |
-| **📥 Bring your history** | Import past sessions from opencode, Claude Code, and Cursor with `koder import`. |
-| **🔐 Signed & notarized** | macOS builds carry aiXplain's Developer ID signature and Apple notarization. Single binary, no root. |
+- **Run any model — you're not tied to one vendor.** Claude Code speaks only to Anthropic and Codex only to OpenAI. Koder runs on the full model catalogue in your aiXplain account from a single API key, or on any provider you bring — Anthropic, OpenAI, Google, OpenRouter, local models, and more. Change models mid-session without changing tools.
+
+- **Bring your history with you.** Coming from another tool? `koder import` pulls your past sessions in from **opencode**, **Claude Code**, and **Cursor**, so you pick up where you left off instead of starting cold.
+
+- **One agent, wherever you work.** The same Koder runs as a fast terminal TUI, a headless server (`koder serve`) for scripts and CI, a browser interface (`koder web`), and a desktop app.
+
+- **Built to extend.** Connect MCP servers for extra tools and data, run specialized subagents in parallel, and switch between agents with a single keypress.
+
+- **Yours to run.** Open source under MIT, shipped as one signed-and-notarized binary that installs without root. Your API keys and session history stay on your machine.
 
 ## Install
 
