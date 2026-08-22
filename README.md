@@ -1,9 +1,6 @@
 <div align="center">
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/assets/koder-mark-dark-theme.svg">
-  <img alt="Koder" src="docs/assets/koder-mark.svg" width="96" height="96">
-</picture>
+<img alt="aiXplain" src="docs/assets/aixplain-mark.svg" width="72" height="72">
 
 # Koder
 
