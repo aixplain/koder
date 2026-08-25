@@ -25,7 +25,7 @@ tools, and works against the models in your aiXplain account.
 
 - **Bring your history with you.** Coming from another tool? `koder import` pulls your past sessions in from **opencode**, **Claude Code**, and **Cursor**, so you pick up where you left off instead of starting cold.
 
-- **One agent, wherever you work.** The same Koder runs as a fast terminal TUI, a headless server (`koder serve`) for scripts and CI, a browser interface (`koder web`), and a desktop app.
+- **One agent, wherever you work.** The same Koder runs as a fast terminal TUI, a headless server (`koder serve`) for scripts and CI, and a browser interface (`koder web`).
 
 - **Built to extend.** Connect MCP servers for extra tools and data, run specialized subagents in parallel, and switch between agents with a single keypress.
 
