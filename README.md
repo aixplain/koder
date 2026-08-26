@@ -50,7 +50,7 @@ shell's PATH. It does not need root, and it touches nothing else.
 To install a specific version, or to skip the PATH edit:
 
 ```sh
-curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --version 0.3.0
+curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --version 0.3.1
 curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --no-modify-path
 ```
 
@@ -168,12 +168,22 @@ file-writing tools. Administrators can pin policy that a project config cannot r
 
 ```sh
 koder upgrade       # move to the newest release
-koder upgrade 0.3.0 # or a specific one
+koder upgrade 0.3.1 # or a specific one
 koder uninstall     # remove the binary and everything under ~/.koder
 ```
 
 `koder upgrade` re-runs the installer for the version you asked for, so it follows the
-same path as a fresh install.
+same path as a fresh install. Each release is kept in its own directory, so moving
+back to an earlier one is the same command.
+
+**On 0.3.0 or earlier?** Those builds mis-detect how they were installed, so
+`koder upgrade` fails on them with `Unknown method: unknown` and background updates
+never run. Re-run the install command once to get onto a build that updates itself
+from then on — your configuration, credentials and session history are untouched:
+
+```sh
+curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash
+```
 
 ## Platform support
 
