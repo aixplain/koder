@@ -1,10 +1,10 @@
 <div align="center">
 
-<img alt="aiXplain" src="docs/assets/aixplain-mark.svg" width="72" height="72">
+<img alt="aixplain" src="docs/assets/aixplain.png" width="72" height="72">
 
 # Koder
 
-**aiXplain's agentic coding environment — your terminal, your tools, your models.**
+**aixplain's agentic coding environment — your terminal, your tools, your models.**
 
 [![Release](https://img.shields.io/github/v/release/aixplain/koder?color=ec5b2b&label=release&sort=semver)](https://github.com/aixplain/koder/releases/latest)
 [![Platforms](https://img.shields.io/badge/platforms-macOS%20·%20Linux%20·%20Windows-ec5b2b)](#platform-support)
@@ -15,13 +15,13 @@
 </div>
 
 Koder runs in your terminal, reads and edits the project you point it at, runs your
-tools, and works against the models in your aiXplain account.
+tools, and works against the models in your aixplain account.
 
 ![Koder running in a terminal](docs/koder.png)
 
 ## Why Koder
 
-- **Run any model — you're not tied to one vendor.** Claude Code speaks only to Anthropic and Codex only to OpenAI. Koder runs on the full model catalogue in your aiXplain account from a single API key, or on any provider you bring — Anthropic, OpenAI, Google, OpenRouter, local models, and more. Change models mid-session without changing tools.
+- **Run any model — you're not tied to one vendor.** Claude Code speaks only to Anthropic and Codex only to OpenAI. Koder runs on the full model catalogue in your aixplain account from a single API key, or on any provider you bring — Anthropic, OpenAI, Google, OpenRouter, local models, and more. Change models mid-session without changing tools.
 
 - **Bring your history with you.** Coming from another tool? `koder import` pulls your past sessions in from **opencode**, **Claude Code**, and **Cursor**, so you pick up where you left off instead of starting cold.
 
@@ -56,7 +56,7 @@ curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | 
 
 ## First run
 
-Koder asks for an aiXplain API key the first time it starts.
+Koder asks for an aixplain API key the first time it starts.
 
 Sign in at [app.aixplain.com](https://app.aixplain.com/), open **Integrations → API
 keys**, create a key and paste it in. That single key unlocks the model catalogue on
@@ -102,7 +102,7 @@ koder
 
 ### Models
 
-Run the full catalogue on your aiXplain account from one API key, or bring your own
+Run the full catalogue on your aixplain account from one API key, or bring your own
 provider — Anthropic, OpenAI, Google, OpenRouter and more. Switch models mid-session
 without restarting.
 
@@ -199,7 +199,7 @@ somewhere on your PATH; the shell installer above is for macOS and Linux.
 
 ## Verifying a download
 
-macOS builds are signed with aiXplain's Developer ID certificate and notarized by Apple,
+macOS builds are signed with aixplain's Developer ID certificate and notarized by Apple,
 so they run without a Gatekeeper prompt. You can confirm that yourself:
 
 ```sh
@@ -217,8 +217,8 @@ shasum -a 256 koder-darwin-arm64.tar.gz
 
 ## If you used `aixplain-code`
 
-The command was renamed to `koder`. The old names — `aixplain-code`, `aixplain` and
-`aiXplain` — still work and point at the same binary, so existing scripts and muscle
+The command was renamed to `koder`. The old names — `aixplain-code` and `aixplain`
+— still work and point at the same binary, so existing scripts and muscle
 memory keep working. Release archives are published under both names for the same
 reason.
 
@@ -236,5 +236,5 @@ reason.
 ---
 
 <div align="center">
-<sub>Built by <a href="https://aixplain.com">aiXplain</a> · <a href="https://github.com/aixplain/koder/releases">Releases</a> · <a href="LICENSE">MIT License</a></sub>
+<sub>Built by <a href="https://aixplain.com">aixplain</a> · <a href="https://github.com/aixplain/koder/releases">Releases</a> · <a href="LICENSE">MIT License</a></sub>
 </div>
