@@ -25,7 +25,7 @@ tools, and works against the models in your aixplain account.
 
 - **Bring your history with you.** Coming from another tool? `koder import` pulls your past sessions in from **opencode**, **Claude Code**, and **Cursor**, so you pick up where you left off instead of starting cold.
 
-- **One agent, wherever you work.** The same Koder runs as a fast terminal TUI, a headless server (`koder serve`) for scripts and CI, and a browser interface (`koder web`).
+- **One agent, wherever you work.** The same Koder runs as a fast terminal TUI, a desktop app, a headless server (`koder serve`) for scripts and CI, and a browser interface (`koder web`).
 
 - **Built to extend.** Connect MCP servers for extra tools and data, run specialized subagents in parallel, and switch between agents with a single keypress.
 
@@ -74,6 +74,13 @@ has to be materialised first:
 & ([scriptblock]::Create((irm https://github.com/aixplain/koder/releases/latest/download/install.ps1))) -Version 0.3.1
 & ([scriptblock]::Create((irm https://github.com/aixplain/koder/releases/latest/download/install.ps1))) -NoModifyPath
 ```
+
+### Desktop app
+
+Prefer a window to a terminal? Desktop builds are attached to every
+[release](https://github.com/aixplain/koder/releases/latest): macOS (`.dmg`) and
+Linux (`.deb`, `.AppImage`, `.rpm`). The desktop app and the terminal Koder share
+the same engine, credentials and configuration, so you can move between them freely.
 
 ## First run
 
