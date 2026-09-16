@@ -33,9 +33,22 @@ tools, and works against the models in your aixplain account.
 
 ## Install
 
+macOS and Linux:
+
 ```sh
 curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash
 ```
+
+Windows, in PowerShell:
+
+```powershell
+irm https://github.com/aixplain/koder/releases/latest/download/install.ps1 | iex
+```
+
+> Don't paste the `curl … | bash` line into PowerShell. `bash` isn't a Windows
+> command, and PowerShell 5.1 aliases `curl` to `Invoke-WebRequest`, which rejects
+> `-fsSL`. Use the PowerShell line above — it also puts `koder` on your PATH for
+> PowerShell, cmd and Windows Terminal, which a Git Bash install cannot do.
 
 Open a new terminal afterwards, then run `koder` from inside a project:
 
@@ -52,6 +65,14 @@ To install a specific version, or to skip the PATH edit:
 ```sh
 curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --version 0.3.1
 curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --no-modify-path
+```
+
+The same, in PowerShell. A piped `iex` has nowhere to put options, so the script
+has to be materialised first:
+
+```powershell
+& ([scriptblock]::Create((irm https://github.com/aixplain/koder/releases/latest/download/install.ps1))) -Version 0.3.1
+& ([scriptblock]::Create((irm https://github.com/aixplain/koder/releases/latest/download/install.ps1))) -NoModifyPath
 ```
 
 ## First run
@@ -193,9 +214,15 @@ curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | 
 | Linux | x64, arm64 |
 | Windows | x64 |
 
-macOS 12 or later. On Windows, download `koder-windows-x64.tar.gz` from the
-[releases page](https://github.com/aixplain/koder/releases/latest) and put `koder.exe`
-somewhere on your PATH; the shell installer above is for macOS and Linux.
+macOS 12 or later. On Windows, use the PowerShell installer in [Install](#install) —
+it puts `koder.exe` in `~/.koder/bin` and adds that to your user PATH, so `koder`
+works in PowerShell, cmd and Windows Terminal.
+
+The `curl … | bash` installer also supports Windows, but only from inside Git Bash
+or WSL, and the PATH entry it writes is visible only to that shell. You can always
+download `koder-windows-x64.tar.gz` from the
+[releases page](https://github.com/aixplain/koder/releases/latest) and place
+`koder.exe` on your PATH by hand instead.
 
 ## Verifying a download
 
