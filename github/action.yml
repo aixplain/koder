@@ -34,6 +34,11 @@ inputs:
     description: "Model variant for provider-specific reasoning effort (e.g., high, max, minimal)"
     required: false
 
+  version:
+    description: "Exact koder release to install (e.g. 0.3.11). Defaults to the release this action revision was verified against; any other version must publish SHA256SUMS."
+    required: false
+    default: "0.3.11"
+
   oidc_base_url:
     description: "Base URL for OIDC token exchange API. Only required when running a custom GitHub App install. Defaults to https://api.aiXplain.com"
     required: false
@@ -41,36 +46,86 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Get aixplain-code version
-      id: version
-      shell: bash
-      run: |
-        VERSION=$(curl -sf https://api.github.com/repos/aixplain/koder/releases/latest | grep -o '"tag_name": *"[^"]*"' | cut -d'"' -f4)
-        echo "version=${VERSION:-latest}" >> $GITHUB_OUTPUT
-
-    - name: Cache aixplain-code
-      id: cache
-      uses: actions/cache@v4
-      with:
-        path: ~/.koder/bin
-        key: koder-${{ runner.os }}-${{ runner.arch }}-${{ steps.version.outputs.version }}
-
+    # The action installs ONE fixed koder release, verified by hash, so a pinned
+    # action SHA always runs the same code. It used to resolve
+    # the newest release and pipe its installer into bash: whatever release was
+    # newest at run time then ran with this workflow's credentials and
+    # `id-token: write`, and the action SHA pinned nothing.
     - name: Install koder
-      if: steps.cache.outputs.cache-hit != 'true'
       shell: bash
-      # https://aiXplain.com/install has never served the installer (404). The
-      # installer is a release asset on the public distribution repo, which is
-      # also the only copy a runner outside this org can read.
-      run: curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash
+      env:
+        KODER_VERSION: ${{ inputs.version }}
+        # Hashes of the default release's archives, from the release assets'
+        # published `digest`. Bump them together with the `version` default:
+        #   gh api repos/aixplain/koder/releases/tags/v<version> \
+        #     --jq '.assets[] | select(.name|test("^koder-")) | "\(.name) \(.digest)"'
+        PINNED_VERSION: "0.3.11"
+        PINNED_SUMS: |
+          7b15dde25e3ea1020bda68daa7639438b9c88227f19a6aed16eba017ed13d30d  koder-darwin-arm64.tar.gz
+          9c0dc7e9cde0b0f95c77b2b36696fcab35ec4fee4db396e00a8e63048093bf18  koder-darwin-x64.tar.gz
+          928500871ba973c9ca182c322fe1c1f8aa63273ffd015ae477220459e66e57d4  koder-linux-arm64.tar.gz
+          1a13f2c74be32cdec05f5a92fb6d678462700334f3c33bb811388f5a67b66e0b  koder-linux-x64.tar.gz
+          f6df4012127f55c2175b34d285c2ce29c753438b5bbb84e67c37f54d04fb0314  koder-windows-x64.tar.gz
+      run: |
+        set -euo pipefail
+        version="${KODER_VERSION#v}"
+        if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.][0-9A-Za-z.]+)?$ ]]; then
+          echo "::error::version must be an exact release such as 0.3.11, got '${KODER_VERSION}'"
+          exit 1
+        fi
+        case "${RUNNER_OS}-${RUNNER_ARCH}" in
+          Linux-X64) target=linux-x64 ;;
+          Linux-ARM64) target=linux-arm64 ;;
+          macOS-X64) target=darwin-x64 ;;
+          macOS-ARM64) target=darwin-arm64 ;;
+          Windows-X64) target=windows-x64 ;;
+          *) echo "::error::no koder build for ${RUNNER_OS}/${RUNNER_ARCH}"; exit 1 ;;
+        esac
+        name="koder-${target}.tar.gz"
+        base="https://github.com/aixplain/koder/releases/download/v${version}"
+        tmp=$(mktemp -d)
+        # The default version is checked against the hashes above. Any other
+        # version must publish SHA256SUMS; there is no unverified path.
+        if [ "$version" = "$PINNED_VERSION" ]; then
+          sums="$PINNED_SUMS"
+        else
+          sums=$(curl -fsSL "${base}/SHA256SUMS") || {
+            echo "::error::v${version} publishes no SHA256SUMS, so it cannot be verified; use a release that does"
+            exit 1
+          }
+        fi
+        expected=$(printf '%s\n' "$sums" | awk -v n="$name" '$2 == n || $2 == "*" n { print $1; exit }')
+        if [ -z "$expected" ]; then
+          echo "::error::no checksum for ${name} in v${version}"
+          exit 1
+        fi
+        curl -fsSL -o "${tmp}/${name}" "${base}/${name}"
+        if command -v sha256sum >/dev/null 2>&1; then
+          actual=$(sha256sum "${tmp}/${name}" | awk '{ print $1 }')
+        else
+          actual=$(shasum -a 256 "${tmp}/${name}" | awk '{ print $1 }')
+        fi
+        if [ "$actual" != "$expected" ]; then
+          echo "::error::checksum mismatch for ${name} (expected ${expected}, got ${actual}); not installing"
+          exit 1
+        fi
+        tar -xzf "${tmp}/${name}" -C "$tmp"
+        mkdir -p "$HOME/.koder/bin"
+        ext=""
+        [ "$target" = windows-x64 ] && ext=".exe"
+        # Older archives carry the binary as `aixplain-code`; install it as koder.
+        src="${tmp}/koder${ext}"
+        [ -f "$src" ] || src="${tmp}/aixplain-code${ext}"
+        install -m 755 "$src" "$HOME/.koder/bin/koder${ext}"
+        rm -rf "$tmp"
+        echo "Installed koder v${version} (${name}, sha256 ${actual})"
 
     - name: Add koder to PATH
       shell: bash
-      # The installer targets $KODER_HOME/bin (~/.koder/bin). The pre-rename
-      # ~/.aixplain-code/bin is kept on PATH for runners with a cached install
-      # from an older action revision; it is empty on a fresh runner.
-      run: |
-        echo "$HOME/.koder/bin" >> $GITHUB_PATH
-        echo "$HOME/.aixplain-code/bin" >> $GITHUB_PATH
+      # Only the directory this action just filled. The pre-rename
+      # ~/.aixplain-code/bin is no longer added: on a reused runner it could hold
+      # a binary nothing verified.
+      run: echo "$HOME/.koder/bin" >> $GITHUB_PATH
 
     - name: Run aixplain-code
       shell: bash
