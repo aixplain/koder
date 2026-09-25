@@ -4,9 +4,9 @@
 
 # Koder — AI coding harness by aixplain
 
-**Build freely. Stay in control.**
+**Build freely. Work safely.**
 
-Turn ideas into working software with an AI coding assistant built around your models, your tools, and your decisions. Available for macOS, Windows, and Linux.
+An AI coding harness for turning ideas into working software, with permission checks, reviewable changes, and a choice of hosted or local models. For macOS, Windows, and Linux.
 
 [![Latest release](https://img.shields.io/github/v/release/aixplain/koder?color=ff6868&label=latest&sort=semver)](https://github.com/aixplain/koder/releases/latest)
 [![Copyright aixplain](https://img.shields.io/badge/copyright-aixplain-ff6f6c)](#copyright-and-licenses)
@@ -19,24 +19,35 @@ Turn ideas into working software with an AI coding assistant built around your m
 
 [Intel Mac](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-x64.dmg) · [Linux DEB](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-amd64.deb) · [Linux RPM](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.rpm) · [All downloads](https://koder.aixplain.com/#download)
 
-[The aixplain way](#the-aixplain-way) · [Install the CLI](#install-the-cli) · [Get started](#get-started) · [Privacy and control](#privacy-and-control) · [Get help](#get-help)
+[The aixplain way](#the-aixplain-way) · [Install the CLI](#install-the-cli) · [Get started](#get-started) · [Safety and privacy](#safety-and-privacy) · [Get help](#get-help)
 
 </div>
 
 ## The aixplain way
 
-Code freely. Design freely. Choose how you build, which AI you use, and what it can access.
+Code freely. Design freely. Put safety and privacy at the heart of how you work.
 
 Koder brings that idea to the work in front of you. Describe an app, work through a design, fix a stubborn bug, or understand an unfamiliar codebase. Choose a model, give it the tools it needs, and review what it produces.
 
 | Your freedom | How Koder supports it |
 | --- | --- |
+| **Put safety first** | Use tool permissions and workspace trust to set access boundaries. Review changes and interrupt a run when needed. |
 | **Build your way** | Start in plain language. Plan a feature, implement an interface, or work directly in code, from your terminal or desktop. |
 | **Choose your AI** | Use aixplain's model catalog, connect a supported provider, or configure a local model. |
-| **Set the boundaries** | Configure tool permissions and workspace trust. Inspect the policy, follow the work, and interrupt a run. |
 | **Make the work yours** | Bring project instructions, skills, and MCP tools. Resume saved sessions and review changes in your own project. |
 
 The harness makes these pieces work together: models, tools, context, permissions, and the steps between a request and a result. You choose the setup that fits the task. Hosted models and services may charge for usage.
+
+## Safety and privacy
+
+Useful AI needs clear boundaries. Koder gives you permissions for tool actions, workspace trust for project configuration, and changes you can inspect before relying on them.
+
+- **Permission checks:** tool actions follow your configured policy. Inspect it with `koder inspect` when connecting tools or opening an unfamiliar project.
+- **Reviewable changes:** follow the work, inspect file changes, and check test results before accepting an outcome. You can interrupt a run.
+- **Local storage:** sessions and configuration are stored on your machine. Protect that local profile as you would your project files.
+- **Clear data boundaries:** hosted providers receive the inputs sent to them. A configured local model can keep inference local; connected tools may still send data to external services.
+
+Choose your provider and tool settings to match the sensitivity of the task. See [configuration and updates](#configuration-and-updates) for local storage paths.
 
 ## AI coding in your desktop or terminal
 
@@ -141,17 +152,6 @@ For you, that means a task can move from investigation to edits to tests in the 
 | **Connect tools** | Add MCP servers, skills, and plugins for the tools your workflow needs. |
 | **Review actions** | Configure permissions and workspace trust, inspect effective policy, and review file changes. |
 | **Use credits** | View the selected team's wallet and manage billing through Stripe-hosted pages. |
-
-## Privacy and control
-
-Good privacy starts with knowing where your work goes and what an agent can do.
-
-- **Local state:** sessions and configuration are stored on your machine. Protect that local profile as you would your project files.
-- **Model choice:** hosted providers receive the inputs sent to them. A configured local model can keep inference local; connected tools may still send data to external services.
-- **Tool access:** permissions and workspace trust govern actions. Review the effective policy with `koder inspect`, especially when connecting tools or opening an unfamiliar project.
-- **Reviewable work:** inspect proposed actions and file changes. The safety of a workflow depends on its permissions, providers, tools, and your review.
-
-Choose your provider and tool settings to match the sensitivity of the task. See [configuration and updates](#configuration-and-updates) for local storage paths.
 
 ## Work from the command line
 
