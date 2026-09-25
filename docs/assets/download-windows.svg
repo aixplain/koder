@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="Download for Windows">
+<rect x="0.75" y="0.75" width="238.5" height="78.5" rx="13" fill="#19191C" stroke="#48484F" stroke-width="1.5"/>
+<rect x="15" y="18" width="3" height="44" rx="1.5" fill="#FF6F6C"/>
+<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif"><text x="29" y="34" font-size="15" font-weight="600" fill="#FAFAFA">Download for Windows</text><text x="29" y="55" font-size="12" fill="#B4B4BC">x64 · Installer</text></g>
+<path d="M216 30v18m-6-6 6 6 6-6" stroke="#FF6F6C" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
