@@ -1,6 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="Download for macOS">
-<rect x="0.75" y="0.75" width="238.5" height="78.5" rx="13" fill="#19191C" stroke="#48484F" stroke-width="1.5"/>
-<rect x="15" y="18" width="3" height="44" rx="1.5" fill="#FF6F6C"/>
-<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif"><text x="29" y="34" font-size="15" font-weight="600" fill="#FAFAFA">Download for macOS</text><text x="29" y="55" font-size="12" fill="#B4B4BC">Apple silicon · DMG</text></g>
-<path d="M216 30v18m-6-6 6 6 6-6" stroke="#FF6F6C" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="80" viewBox="0 0 240 80" role="img" aria-labelledby="title description">
+  <title id="title">Download Koder for macOS</title>
+  <desc id="description">Apple silicon · DMG</desc>
+  <rect x="0.75" y="0.75" width="238.5" height="78.5" rx="13" fill="#19191C" stroke="#48484F" stroke-width="1.5"/>
+  <g transform="translate(19 22)" fill="#FAFAFA">
+    <path d="M19.1 6.7c1.7-2 1.6-4.1 1.5-4.7-1.8.1-3.9 1.2-5.1 2.6-1.3 1.4-1.8 3.2-1.7 4.6 2 .2 3.8-.9 5.3-2.5Z"/>
+    <path d="M25.4 25.1c-.8 1.9-1.2 2.7-2.3 4.3-1.5 2.2-3.6 5-6.2 5-2.3 0-2.9-1.4-6-1.4s-3.8 1.4-6 1.5C2.3 34.6.4 31.9-1.1 29.7c-4.1-6-4.5-13.1-1.9-16.8C-1.2 10.3 1.6 9 4.3 9c2.7 0 4.3 1.5 6.5 1.5 2.1 0 3.3-1.5 6.5-1.5 2.4 0 4.9 1.3 6.7 3.5-5.9 3.2-5 11.5 1.4 12.6Z" transform="translate(3 0) scale(.88 1)"/>
+  </g>
+  <g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif">
+    <text x="62" y="24" font-size="11" fill="#B4B4BC">Download for</text>
+    <text x="62" y="45" font-size="19" font-weight="600" fill="#FAFAFA">macOS</text>
+    <text x="62" y="63" font-size="11" fill="#B4B4BC">Apple silicon · DMG</text>
+  </g>
+  <path d="M217 32v16m-5-5 5 5 5-5m-11 11h12" stroke="#FF6F6C" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
