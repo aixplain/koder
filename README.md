@@ -1,274 +1,167 @@
 <div align="center">
 
-<img alt="aixplain" src="docs/assets/aixplain.png" width="72" height="72">
+<img src="docs/assets/aixplain-mark.svg" alt="aiXplain" width="64" height="64">
 
 # Koder
 
-**aixplain's agentic coding environment — your terminal, your tools, your models.**
+**AI coding agent for your desktop and terminal.**
 
-[![Release](https://img.shields.io/github/v/release/aixplain/koder?color=ec5b2b&label=release&sort=semver)](https://github.com/aixplain/koder/releases/latest)
-[![Platforms](https://img.shields.io/badge/platforms-macOS%20·%20Linux%20·%20Windows-ec5b2b)](#platform-support)
-[![License](https://img.shields.io/github/license/aixplain/koder?color=ec5b2b)](LICENSE)
+Plan changes. Edit code. Run tests. Keep the work in your project.
 
-[Install](#install) · [First run](#first-run) · [Using it](#using-it) · [Features](#features) · [Upgrading](#upgrading-and-removing) · [Platforms](#platform-support) · [Configuration](#configuration)
+[![Latest release](https://img.shields.io/github/v/release/aixplain/koder?color=ff6868&label=latest&sort=semver)](https://github.com/aixplain/koder/releases/latest)
+[![License: MIT](https://img.shields.io/badge/license-MIT-ff6868)](LICENSE)
+
+[![Download Koder Desktop](https://img.shields.io/badge/Download_Koder_Desktop-FF6F6C?style=for-the-badge&labelColor=19191c)](https://koder.aixplain.com/#download)
+
+[Install the CLI](#install-the-cli) · [Get started](#get-started) · [How it works](#how-koder-works) · [Release notes](https://github.com/aixplain/koder/releases) · [Get help](#get-help)
 
 </div>
 
-Koder runs in your terminal, reads and edits the project you point it at, runs your
-tools, and works against the models in your aixplain account.
+Koder brings aiXplain's model catalog, coding tools, and persistent sessions into a desktop app and an interactive terminal. Describe a task, follow the agent's work, answer its questions, and review the changes. Use aiXplain, connect another supported model provider, or configure a local model.
 
-![Koder running in a terminal](docs/koder.png)
+## Choose your workspace
 
-## Why Koder
+### Desktop
 
-- **Run any model — you're not tied to one vendor.** Claude Code speaks only to Anthropic and Codex only to OpenAI. Koder runs on the full model catalogue in your aixplain account from a single API key, or on any provider you bring — Anthropic, OpenAI, Google, OpenRouter, local models, and more. Change models mid-session without changing tools.
+A workspace for conversations, project files, terminal commands, and reviewing changes.
 
-- **Bring your history with you.** Coming from another tool? `koder import` pulls your past sessions in from **opencode**, **Claude Code**, and **Cursor**, so you pick up where you left off instead of starting cold.
+![Koder desktop showing a new session in an empty project](docs/assets/desktop.png)
 
-- **One agent, wherever you work.** The same Koder runs as a fast terminal TUI, a desktop app, a headless server (`koder serve`) for scripts and CI, and a browser interface (`koder web`).
+<details>
+<summary>See desktop permissions</summary>
 
-- **Built to extend.** Connect MCP servers for extra tools and data, run specialized subagents in parallel, and switch between agents with a single keypress.
+![Koder desktop permissions settings, grouped by tool capability](docs/assets/desktop-permissions.png)
 
-- **Yours to run.** Open source under MIT, shipped as one signed-and-notarized binary that installs without root. Your API keys and session history stay on your machine.
+</details>
 
-## Install
+### Terminal
 
-macOS and Linux:
+A keyboard and mouse interface for working directly in your repository, plus a CLI for scripts and automation.
+
+![Koder terminal home screen in an empty workspace](docs/assets/terminal.png)
+
+*Screenshots show the development interface. See the [release notes](https://github.com/aixplain/koder/releases/latest) for features in the current download.*
+
+## Download the desktop app
+
+Choose your platform below, or use the [download page](https://koder.aixplain.com/#download).
+
+| Your computer | Installer |
+| --- | --- |
+| macOS · Apple silicon | [Download DMG](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-arm64.dmg) |
+| macOS · Intel | [Download DMG](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-x64.dmg) |
+| Windows · x64 | [Download EXE](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-win-x64.exe) |
+| Linux · x64 | [DEB](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-amd64.deb) · [AppImage](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.AppImage) · [RPM](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.rpm) |
+
+**Windows signing:** the v0.4.1 desktop installer is unsigned and may show an unknown-publisher or SmartScreen warning. Check the release notes for the signing status of later versions.
+
+For CLI archives, checksums, and previous versions, see [all releases](https://github.com/aixplain/koder/releases). Linux arm64 is available as a CLI download.
+
+## Install the CLI
+
+**macOS and Linux**
 
 ```sh
 curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash
 ```
 
-Windows, in PowerShell:
+**Windows — PowerShell**
 
 ```powershell
 irm https://github.com/aixplain/koder/releases/latest/download/install.ps1 | iex
 ```
 
-> Don't paste the `curl … | bash` line into PowerShell. `bash` isn't a Windows
-> command, and PowerShell 5.1 aliases `curl` to `Invoke-WebRequest`, which rejects
-> `-fsSL`. Use the PowerShell line above — it also puts `koder` on your PATH for
-> PowerShell, cmd and Windows Terminal, which a Git Bash install cannot do.
+Use the PowerShell command on Windows. The installer places `koder` in `~/.koder/bin` and adds it to your user PATH. Open a new terminal after installation.
 
-Open a new terminal afterwards, then run `koder` from inside a project:
+CLI builds are available for macOS arm64/x64, Linux arm64/x64, and Windows x64. To inspect the installer before running it, download [`install`](https://github.com/aixplain/koder/releases/latest/download/install) or [`install.ps1`](https://github.com/aixplain/koder/releases/latest/download/install.ps1).
+
+## Get started
+
+1. **Open a project.** Choose a folder in the desktop app, or run `koder` from your project directory.
+2. **Connect a model.** Sign in to aiXplain or configure a supported provider. An aiXplain API key can also provide model access; account billing requires sign-in.
+3. **Give it a concrete task.** Describe the outcome and any constraints. Review proposed actions, answer questions, and inspect the resulting diff.
 
 ```sh
-cd ~/your-project
+cd your-project
 koder
 ```
 
-The installer drops a single binary in `~/.koder/bin` and adds that directory to your
-shell's PATH. It does not need root, and it touches nothing else.
+Try a task like:
 
-To install a specific version, or to skip the PATH edit:
+> Find why this test fails, explain the cause, make the smallest fix, and run the relevant tests.
 
-```sh
-curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --version 0.3.1
-curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash -s -- --no-modify-path
-```
-
-The same, in PowerShell. A piped `iex` has nowhere to put options, so the script
-has to be materialised first:
-
-```powershell
-& ([scriptblock]::Create((irm https://github.com/aixplain/koder/releases/latest/download/install.ps1))) -Version 0.3.1
-& ([scriptblock]::Create((irm https://github.com/aixplain/koder/releases/latest/download/install.ps1))) -NoModifyPath
-```
-
-### Desktop app
-
-Prefer a window to a terminal? Desktop builds are attached to every
-[release](https://github.com/aixplain/koder/releases/latest): macOS (`.dmg`) and
-Linux (`.deb`, `.AppImage`, `.rpm`). The desktop app and the terminal Koder share
-the same engine, credentials and configuration, so you can move between them freely.
-
-## First run
-
-Koder asks for an aixplain API key the first time it starts.
-
-Sign in at [app.aixplain.com](https://app.aixplain.com/), open **Integrations → API
-keys**, create a key and paste it in. That single key unlocks the model catalogue on
-your account. It is stored under your home directory, never in your project.
-
-If you would rather use a different provider, choose **Use a different provider** on the
-same screen, or run `koder providers` later.
-
-## Using it
-
-Start Koder in a project and describe what you want in plain language. It reads the
-files it needs, proposes edits, and runs commands when you let it.
+For aiXplain account access from the CLI:
 
 ```sh
-cd ~/your-project
-koder
+koder login
+koder whoami
+koder models
 ```
 
-### Keys worth knowing
+You can manage providers with `koder providers`. Available models and tools depend on your provider, account, and configuration.
 
-| | |
-|---|---|
-| `tab` | switch agents |
-| `ctrl+p` | command palette |
-| `/` | slash commands (see below) |
+## How Koder works
 
-### From the shell
+Koder's agent harness connects the model to your project, tools, permissions, and session history. The model can inspect files, propose edits, run commands, read their results, and continue working. You can interrupt the run or resume the conversation later.
 
-| | |
-|---|---|
-| `koder run "…"` | one-shot: answer and exit — useful in scripts and CI |
-| `koder run --model <id> "…"` | pick the model for a single turn |
-| `koder models` | list the models available to you |
-| `koder import` | bring sessions over from opencode, Claude Code, or Cursor |
-| `koder session` | list, resume, fork and export past sessions |
-| `koder stats` | token usage and spend so far |
-| `koder serve` | headless HTTP server |
-| `koder web` | browser interface |
+| Capability | What you can do |
+| --- | --- |
+| **Code and test** | Read and search files, edit code, execute project commands, and inspect their output. |
+| **Plan and delegate** | Use the planning agent to investigate a change, then switch to implementation. Delegate focused work to subagents. |
+| **Keep context** | Resume saved sessions and provide project instructions through `AGENTS.md`. |
+| **Choose models** | Use aiXplain's catalog or another supported provider; select models for different tasks. |
+| **Connect tools** | Add MCP servers, skills, and plugins for the tools your workflow needs. |
+| **Review actions** | Configure permissions and workspace trust, inspect effective policy, and review file changes. |
+| **Use credits** | View the selected team's wallet and manage billing through Stripe-hosted pages. |
 
-`koder run` exits non-zero when a turn fails, so it composes with `&&` and CI gates.
+Actions follow your configured permissions. Hosted models and connected services receive the inputs needed for their work; review your provider settings and tool configuration before using sensitive project data.
 
-## Features
+### Useful commands
 
-### Models
+| Command | Purpose |
+| --- | --- |
+| `koder run "Explain this project"` | Run a prompt from the shell. |
+| `koder run --agent plan "Plan this change"` | Start a task with the planning agent. |
+| `koder run --model <provider/model> "…"` | Select a model for a run. |
+| `koder session list` | List saved sessions. |
+| `koder import` | Import supported conversation histories. |
+| `koder mcp` | Manage MCP tool connections. |
+| `koder inspect` | Inspect the effective permission and policy configuration. |
+| `koder stats` | View recorded usage. |
+| `koder serve` | Start an HTTP server for clients and integrations. |
+| `koder web` | Open the browser interface. |
 
-Run the full catalogue on your aixplain account from one API key, or bring your own
-provider — Anthropic, OpenAI, Google, OpenRouter and more. Switch models mid-session
-without restarting.
+Run `koder --help` or `koder <command> --help` for the options supported by your installed version.
 
-**Local models work out of the box.** If [Ollama](https://ollama.com) is running,
-Koder finds it and offers exactly the models you have pulled — asking Ollama which
-of them can hold a conversation, call tools, accept images and how much context they
-have, rather than guessing. Nothing to configure; set `OLLAMA_HOST` if yours is not
-on the default port.
+### Team credits and billing
+
+Open **Settings → Account** on desktop, use **`/billing`** in the terminal interface, or run:
 
 ```sh
-koder run --model ollama/qwen3.5:latest "explain this repo"
+koder billing
+koder billing top-up --amount 10
+koder billing add-card
 ```
 
-### Agents and subagents
+Koder shows the selected team before opening checkout. Payment details and final confirmation stay on Stripe's hosted page. Return to Koder and refresh the wallet to see the updated balance. Managing billing requires an eligible signed-in team role; an inference API key alone does not grant billing access.
 
-Switch agents with `tab`. `build` edits, `plan` investigates without touching files,
-and specialised agents can run in parallel as subagents. `koder agent` manages them.
+## Configuration and updates
 
-### Extending it
+Use `AGENTS.md` in your repository for project instructions. Global configuration normally lives in `~/.config/koder/koder.json` or `koder.jsonc`; XDG environment settings can change these paths. Sessions and other local state are stored separately under `~/.local/share/koder`.
 
-- **MCP servers** — `koder mcp` connects external tools and data sources.
-- **Powers** — MCP servers that stay dormant until a keyword in the conversation
-  wakes them, so a big toolbox costs nothing until it is wanted.
-- **Workspace helpers** — scripts the agent writes for itself become callable tools.
-- **Claude Code compatibility** — reads Claude Code agents, hooks, plugin manifests
-  and marketplaces.
-
-### Working at scale
-
-- **Specs** (`koder spec`) — turn a request into requirements, a plan and tasks, then
-  run the tasks in concurrent waves.
-- **Workflows** (`/workflows`) — model-authored orchestration scripts you can pause,
-  resume and stop by name.
-- **`/loop`** — schedule a recurring prompt, list what is scheduled, and cancel one.
-
-### Memory that survives the session
-
-`/memory`, `/dream` and `/flush` manage what Koder remembers about a project.
-Corrections you make are recorded as lessons and re-applied in later sessions.
-
-### Browser automation
-
-Drive a real browser: navigate, snapshot the accessibility tree, manage tabs and
-record sessions for replay. Opt-in — see `KODER_EXPERIMENTAL_BROWSER`.
-
-### Control over what it can do
-
-Koder is built to be run on real repositories, so the limits are first-class rather
-than advisory:
-
-| | |
-|---|---|
-| `koder inspect` | what this configuration actually permits, including where a policy is silently doing nothing |
-| `koder trust` | which directories may contribute config — an untrusted repo cannot weaken your sandbox or policy by being opened |
-| `koder compliance` | the effective privacy profile, and every network destination the configuration permits |
-| `koder audit` | a tamper-evident local record of permission decisions, with `verify` to check the chain |
-
-Commands run inside an OS sandbox where one is available (seatbelt on macOS,
-bubblewrap on Linux), with `sandbox.deny` globs covering both shell commands and the
-file-writing tools. Administrators can pin policy that a project config cannot reopen.
-
-## Upgrading and removing
+Update the CLI and check its version:
 
 ```sh
-koder upgrade       # move to the newest release
-koder upgrade 0.3.1 # or a specific one
-koder uninstall     # remove the binary and everything under ~/.koder
+koder upgrade
+koder --version
 ```
 
-`koder upgrade` re-runs the installer for the version you asked for, so it follows the
-same path as a fresh install. Each release is kept in its own directory, so moving
-back to an earlier one is the same command.
+Desktop users can use the app's update controls or download the current installer. Release archives include `SHA256SUMS` for checksum verification. The `aixplain-code` command remains available as a compatibility alias.
 
-**On 0.3.0 or earlier?** Those builds mis-detect how they were installed, so
-`koder upgrade` fails on them with `Unknown method: unknown` and background updates
-never run. Re-run the install command once to get onto a build that updates itself
-from then on — your configuration, credentials and session history are untouched:
+## Get help
 
-```sh
-curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash
-```
+- [Report a bug](https://github.com/aixplain/koder/issues/new/choose) with your version, operating system, reproduction steps, and expected result.
+- Check the [release notes](https://github.com/aixplain/koder/releases) for fixes and known limitations.
+- For security reports, email **help@aixplain.com**. Remove credentials and private project data before sharing logs or screenshots.
 
-## Platform support
-
-| Platform | Architectures |
-|---|---|
-| macOS | Apple Silicon (arm64), Intel (x64) |
-| Linux | x64, arm64 |
-| Windows | x64 |
-
-macOS 12 or later. On Windows, use the PowerShell installer in [Install](#install) —
-it puts `koder.exe` in `~/.koder/bin` and adds that to your user PATH, so `koder`
-works in PowerShell, cmd and Windows Terminal.
-
-The `curl … | bash` installer also supports Windows, but only from inside Git Bash
-or WSL, and the PATH entry it writes is visible only to that shell. You can always
-download `koder-windows-x64.tar.gz` from the
-[releases page](https://github.com/aixplain/koder/releases/latest) and place
-`koder.exe` on your PATH by hand instead.
-
-## Verifying a download
-
-macOS builds are signed with aixplain's Developer ID certificate and notarized by Apple,
-so they run without a Gatekeeper prompt. You can confirm that yourself:
-
-```sh
-spctl --assess --type install -vv ~/.koder/bin/koder
-# koder: accepted
-# source=Notarized Developer ID
-# origin=Developer ID Application: aiXplain, Inc. (U6RQVYMH8L)
-```
-
-To check an archive against the checksum on its release:
-
-```sh
-shasum -a 256 koder-darwin-arm64.tar.gz
-```
-
-## If you used `aixplain-code`
-
-The command was renamed to `koder`. The old names — `aixplain-code` and `aixplain`
-— still work and point at the same binary, so existing scripts and muscle
-memory keep working. Release archives are published under both names for the same
-reason.
-
-## Configuration
-
-| | |
-|---|---|
-| `~/.koder/bin` | the binary and its command aliases |
-| `~/.config/koder/koder.json` | configuration |
-| `~/.local/share/koder` | logs, credentials and local state |
-| `~/.cache/koder` | downloaded tooling |
-| `KODER_RELEASE_REPO` | install and upgrade from a different repository |
-| `KODER_DIST_URL` | install and upgrade from a mirror instead of GitHub |
-
----
-
-<div align="center">
-<sub>Built by <a href="https://aixplain.com">aixplain</a> · <a href="https://github.com/aixplain/koder/releases">Releases</a> · <a href="LICENSE">MIT License</a></sub>
-</div>
+This repository hosts Koder's public downloads and issue tracker. Koder is developed by [aiXplain](https://aixplain.com) and distributed under the [MIT license](LICENSE).
