@@ -4,14 +4,20 @@
 
 # Koder
 
-**AI coding agent for your desktop and terminal.**
+**Your models. Your tools. One coding harness.**
 
-Plan changes. Edit code. Run tests. Keep the work in your project.
+Plan, code, and test with aiXplain, your own provider, or local models — in your terminal or desktop.
 
 [![Latest release](https://img.shields.io/github/v/release/aixplain/koder?color=ff6868&label=latest&sort=semver)](https://github.com/aixplain/koder/releases/latest)
 [![License: MIT](https://img.shields.io/badge/license-MIT-ff6868)](LICENSE)
 
-[![Download Koder Desktop](https://img.shields.io/badge/Download_Koder_Desktop-FF6F6C?style=for-the-badge&labelColor=19191c)](https://koder.aixplain.com/#download)
+<p align="center">
+  <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-arm64.dmg"><img src="docs/assets/download-macos.svg" alt="Download Koder for macOS — Apple silicon" width="240" height="80"></a>
+  <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-win-x64.exe"><img src="docs/assets/download-windows.svg" alt="Download Koder for Windows — x64" width="240" height="80"></a>
+  <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.AppImage"><img src="docs/assets/download-linux.svg" alt="Download Koder for Linux — x64 AppImage" width="240" height="80"></a>
+</p>
+
+[Intel Mac](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-x64.dmg) · [Linux DEB](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-amd64.deb) · [Linux RPM](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.rpm) · [All downloads](https://koder.aixplain.com/#download)
 
 [Install the CLI](#install-the-cli) · [Get started](#get-started) · [How it works](#how-koder-works) · [Release notes](https://github.com/aixplain/koder/releases) · [Get help](#get-help)
 
