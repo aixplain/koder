@@ -31,12 +31,19 @@ Koder brings aiXplain's model catalog, coding tools, and persistent sessions int
 
 A workspace for conversations, project files, terminal commands, and reviewing changes.
 
-![Koder desktop showing a new session in an empty project](docs/assets/desktop.png)
+![Koder desktop showing a new session in an empty project](docs/assets/desktop-large-logo.png)
 
 <details>
 <summary>See desktop permissions</summary>
 
 ![Koder desktop permissions settings, grouped by tool capability](docs/assets/desktop-permissions.png)
+
+</details>
+
+<details>
+<summary>See Omni</summary>
+
+![Omni desktop with starter prompts and the aiXplain logo](docs/assets/omni.png)
 
 </details>
 
@@ -174,6 +181,6 @@ This repository hosts Koder's public downloads and issue tracker. Koder is devel
 
 ## Copyright and licenses
 
-**© 2026 aiXplain. All rights reserved.**
+**© 2026 aiXplain Inc. All rights reserved.**
 
 This notice applies to aiXplain-owned branding and original material, subject to any express license grants. Third-party and upstream components retain their respective licenses, copyright notices, and permissions. See [LICENSE](LICENSE) and the notices included with each distribution.

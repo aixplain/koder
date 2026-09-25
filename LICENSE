@@ -1,6 +1,35 @@
+Koder — aiXplain proprietary license and third-party notices
+
+Copyright (c) 2026 aiXplain Inc. All rights reserved.
+
+Scope
+-----
+This notice applies to aiXplain-owned material in this version of Koder,
+including its branding, artwork, documentation, and proprietary modifications,
+except material covered by a separate license or a prior license grant.
+
+You may download, install, and use official Koder binaries for their intended
+purpose, subject to the terms of any connected services. No other permission
+to copy, modify, distribute, sublicense, or sell aiXplain-owned proprietary
+material is granted without aiXplain's written permission, except as required
+by applicable law. No trademark rights are granted.
+
+Existing grants and third-party components
+-----------------------------------------
+This notice does not revoke permissions already granted for earlier copies,
+or replace the licenses of upstream code, dependencies, or components with
+their own license. Those components remain governed by their respective
+licenses. Preserve their copyright, license, and attribution notices.
+Separately licensed packages retain the license stated in that package.
+
+Koder includes code derived from opencode. The following MIT notice is
+preserved for that code and material previously distributed under this grant:
+
 MIT License
 
 Copyright (c) 2026 aixplain
+Copyright (c) 2025 opencode
+Copyright (c) 2026 aiXplain Inc. (modifications: AiXplain Code fork)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
