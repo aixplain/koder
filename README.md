@@ -2,11 +2,11 @@
 
 <img src="docs/assets/aixplain-mark.svg" alt="aixplain" width="64" height="64">
 
-# Koder
+# Koder — AI coding harness by aixplain
 
-**Your models. Your tools. One coding harness.**
+**Build freely. Stay in control.**
 
-Plan, code, and test with aixplain, your own provider, or local models — in your terminal or desktop.
+Turn ideas into working software with an AI coding assistant built around your models, your tools, and your decisions. Available for macOS, Windows, and Linux.
 
 [![Latest release](https://img.shields.io/github/v/release/aixplain/koder?color=ff6868&label=latest&sort=semver)](https://github.com/aixplain/koder/releases/latest)
 [![Copyright aixplain](https://img.shields.io/badge/copyright-aixplain-ff6f6c)](#copyright-and-licenses)
@@ -19,17 +19,30 @@ Plan, code, and test with aixplain, your own provider, or local models — in yo
 
 [Intel Mac](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-x64.dmg) · [Linux DEB](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-amd64.deb) · [Linux RPM](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.rpm) · [All downloads](https://koder.aixplain.com/#download)
 
-[Install the CLI](#install-the-cli) · [Get started](#get-started) · [How it works](#how-koder-works) · [Release notes](https://github.com/aixplain/koder/releases) · [Get help](#get-help)
+[The aixplain way](#the-aixplain-way) · [Install the CLI](#install-the-cli) · [Get started](#get-started) · [Privacy and control](#privacy-and-control) · [Get help](#get-help)
 
 </div>
 
-Koder brings aixplain's model catalog, coding tools, and persistent sessions into a desktop app and an interactive terminal. Describe a task, follow the agent's work, answer its questions, and review the changes. Use aixplain, connect another supported model provider, or configure a local model.
+## The aixplain way
 
-## Choose your workspace
+Code freely. Design freely. Choose how you build, which AI you use, and what it can access.
+
+Koder brings that idea to the work in front of you. Describe an app, work through a design, fix a stubborn bug, or understand an unfamiliar codebase. Choose a model, give it the tools it needs, and review what it produces.
+
+| Your freedom | How Koder supports it |
+| --- | --- |
+| **Build your way** | Start in plain language. Plan a feature, implement an interface, or work directly in code, from your terminal or desktop. |
+| **Choose your AI** | Use aixplain's model catalog, connect a supported provider, or configure a local model. |
+| **Set the boundaries** | Configure tool permissions and workspace trust. Inspect the policy, follow the work, and interrupt a run. |
+| **Make the work yours** | Bring project instructions, skills, and MCP tools. Resume saved sessions and review changes in your own project. |
+
+The harness makes these pieces work together: models, tools, context, permissions, and the steps between a request and a result. You choose the setup that fits the task. Hosted models and services may charge for usage.
+
+## AI coding in your desktop or terminal
 
 ### Desktop
 
-A workspace for conversations, project files, terminal commands, and reviewing changes.
+Keep the conversation, project files, terminal commands, and code review in one workspace. Go from a request to a diff you can inspect.
 
 ![Koder desktop showing a new session in an empty project](docs/assets/desktop-large-logo.png)
 
@@ -49,9 +62,9 @@ A workspace for conversations, project files, terminal commands, and reviewing c
 
 ### Terminal
 
-A keyboard and mouse interface for working directly in your repository, plus a CLI for scripts and automation.
+Stay close to your code with an interactive terminal interface, keyboard and mouse controls, and a CLI for scripts and automation.
 
-![Koder terminal home screen in an empty workspace](docs/assets/terminal.png)
+![Koder AI coding terminal with the crowned logo in an empty workspace](docs/assets/terminal.png)
 
 *Screenshots show the development interface. See the [release notes](https://github.com/aixplain/koder/releases/latest) for features in the current download.*
 
@@ -113,9 +126,11 @@ koder models
 
 You can manage providers with `koder providers`. Available models and tools depend on your provider, account, and configuration.
 
-## How Koder works
+## How the Koder agent harness works
 
-Koder's agent harness connects the model to your project, tools, permissions, and session history. The model can inspect files, propose edits, run commands, read their results, and continue working. You can interrupt the run or resume the conversation later.
+A model supplies the reasoning. Koder's harness connects it to the work: files to inspect, tools to use, permissions to follow, and session history to carry forward. It lets an agent run a command, read the result, and use that evidence in its next step.
+
+For you, that means a task can move from investigation to edits to tests in the same conversation. You can follow the work, answer a question, interrupt a run, and inspect the result.
 
 | Capability | What you can do |
 | --- | --- |
@@ -127,7 +142,18 @@ Koder's agent harness connects the model to your project, tools, permissions, an
 | **Review actions** | Configure permissions and workspace trust, inspect effective policy, and review file changes. |
 | **Use credits** | View the selected team's wallet and manage billing through Stripe-hosted pages. |
 
-Actions follow your configured permissions. Hosted models and connected services receive the inputs needed for their work; review your provider settings and tool configuration before using sensitive project data.
+## Privacy and control
+
+Good privacy starts with knowing where your work goes and what an agent can do.
+
+- **Local state:** sessions and configuration are stored on your machine. Protect that local profile as you would your project files.
+- **Model choice:** hosted providers receive the inputs sent to them. A configured local model can keep inference local; connected tools may still send data to external services.
+- **Tool access:** permissions and workspace trust govern actions. Review the effective policy with `koder inspect`, especially when connecting tools or opening an unfamiliar project.
+- **Reviewable work:** inspect proposed actions and file changes. The safety of a workflow depends on its permissions, providers, tools, and your review.
+
+Choose your provider and tool settings to match the sensitivity of the task. See [configuration and updates](#configuration-and-updates) for local storage paths.
+
+## Work from the command line
 
 ### Useful commands
 
