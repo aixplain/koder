@@ -1,20 +1,20 @@
 <div align="center">
 
-<img src="docs/assets/aixplain-mark.svg" alt="aiXplain" width="64" height="64">
+<img src="docs/assets/aixplain-mark.svg" alt="aixplain" width="64" height="64">
 
 # Koder
 
 **Your models. Your tools. One coding harness.**
 
-Plan, code, and test with aiXplain, your own provider, or local models — in your terminal or desktop.
+Plan, code, and test with aixplain, your own provider, or local models — in your terminal or desktop.
 
 [![Latest release](https://img.shields.io/github/v/release/aixplain/koder?color=ff6868&label=latest&sort=semver)](https://github.com/aixplain/koder/releases/latest)
-[![Copyright aiXplain](https://img.shields.io/badge/copyright-aiXplain-ff6f6c)](#copyright-and-licenses)
+[![Copyright aixplain](https://img.shields.io/badge/copyright-aixplain-ff6f6c)](#copyright-and-licenses)
 
 <p align="center">
-  <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-arm64.dmg"><img src="docs/assets/download-macos.svg" alt="Download Koder for macOS — Apple silicon" width="240" height="80"></a>
-  <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-win-x64.exe"><img src="docs/assets/download-windows.svg" alt="Download Koder for Windows — x64" width="240" height="80"></a>
-  <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.AppImage"><img src="docs/assets/download-linux.svg" alt="Download Koder for Linux — x64 AppImage" width="240" height="80"></a>
+  <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-arm64.dmg"><img src="docs/assets/download-macos-icon.svg" alt="Download Koder for macOS — Apple silicon" width="240" height="80"></a>
+  <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-win-x64.exe"><img src="docs/assets/download-windows-icon.svg" alt="Download Koder for Windows — x64" width="240" height="80"></a>
+  <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.AppImage"><img src="docs/assets/download-linux-icon.svg" alt="Download Koder for Linux — x64 AppImage" width="240" height="80"></a>
 </p>
 
 [Intel Mac](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-x64.dmg) · [Linux DEB](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-amd64.deb) · [Linux RPM](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.rpm) · [All downloads](https://koder.aixplain.com/#download)
@@ -23,7 +23,7 @@ Plan, code, and test with aiXplain, your own provider, or local models — in yo
 
 </div>
 
-Koder brings aiXplain's model catalog, coding tools, and persistent sessions into a desktop app and an interactive terminal. Describe a task, follow the agent's work, answer its questions, and review the changes. Use aiXplain, connect another supported model provider, or configure a local model.
+Koder brings aixplain's model catalog, coding tools, and persistent sessions into a desktop app and an interactive terminal. Describe a task, follow the agent's work, answer its questions, and review the changes. Use aixplain, connect another supported model provider, or configure a local model.
 
 ## Choose your workspace
 
@@ -43,7 +43,7 @@ A workspace for conversations, project files, terminal commands, and reviewing c
 <details>
 <summary>See Omni</summary>
 
-![Omni desktop with starter prompts and the aiXplain logo](docs/assets/omni.png)
+![Omni desktop with starter prompts and the aixplain logo](docs/assets/omni.png)
 
 </details>
 
@@ -91,7 +91,7 @@ CLI builds are available for macOS arm64/x64, Linux arm64/x64, and Windows x64. 
 ## Get started
 
 1. **Open a project.** Choose a folder in the desktop app, or run `koder` from your project directory.
-2. **Connect a model.** Sign in to aiXplain or configure a supported provider. An aiXplain API key can also provide model access; account billing requires sign-in.
+2. **Connect a model.** Sign in to aixplain or configure a supported provider. An aixplain API key can also provide model access; account billing requires sign-in.
 3. **Give it a concrete task.** Describe the outcome and any constraints. Review proposed actions, answer questions, and inspect the resulting diff.
 
 ```sh
@@ -103,7 +103,7 @@ Try a task like:
 
 > Find why this test fails, explain the cause, make the smallest fix, and run the relevant tests.
 
-For aiXplain account access from the CLI:
+For aixplain account access from the CLI:
 
 ```sh
 koder login
@@ -122,7 +122,7 @@ Koder's agent harness connects the model to your project, tools, permissions, an
 | **Code and test** | Read and search files, edit code, execute project commands, and inspect their output. |
 | **Plan and delegate** | Use the planning agent to investigate a change, then switch to implementation. Delegate focused work to subagents. |
 | **Keep context** | Resume saved sessions and provide project instructions through `AGENTS.md`. |
-| **Choose models** | Use aiXplain's catalog or another supported provider; select models for different tasks. |
+| **Choose models** | Use aixplain's catalog or another supported provider; select models for different tasks. |
 | **Connect tools** | Add MCP servers, skills, and plugins for the tools your workflow needs. |
 | **Review actions** | Configure permissions and workspace trust, inspect effective policy, and review file changes. |
 | **Use credits** | View the selected team's wallet and manage billing through Stripe-hosted pages. |
@@ -177,10 +177,10 @@ Desktop users can use the app's update controls or download the current installe
 - Check the [release notes](https://github.com/aixplain/koder/releases) for fixes and known limitations.
 - For security reports, email **help@aixplain.com**. Remove credentials and private project data before sharing logs or screenshots.
 
-This repository hosts Koder's public downloads and issue tracker. Koder is developed by [aiXplain](https://aixplain.com).
+This repository hosts Koder's public downloads and issue tracker. Koder is developed by [aixplain](https://aixplain.com).
 
 ## Copyright and licenses
 
-**© 2026 aiXplain Inc. All rights reserved.**
+**© 2026 aixplain Inc. All rights reserved.**
 
-This notice applies to aiXplain-owned branding and original material, subject to any express license grants. Third-party and upstream components retain their respective licenses, copyright notices, and permissions. See [LICENSE](LICENSE) and the notices included with each distribution.
+This notice applies to aixplain-owned branding and original material, subject to any express license grants. Third-party and upstream components retain their respective licenses, copyright notices, and permissions. See [LICENSE](LICENSE) and the notices included with each distribution.
