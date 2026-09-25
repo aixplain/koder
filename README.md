@@ -4,7 +4,7 @@
 
 # Koder — AI coding harness by aixplain
 
-**Build freely. Work safely.**
+**Safe to explore. Free to build.**
 
 An AI coding harness for turning ideas into working software, with permission checks, reviewable changes, and a choice of hosted or local models. For macOS, Windows, and Linux.
 
@@ -25,7 +25,7 @@ An AI coding harness for turning ideas into working software, with permission ch
 
 ## The aixplain way
 
-Code freely. Design freely. Put safety and privacy at the heart of how you work.
+Safety makes freedom possible. When you feel safe, you can take creative risks, explore unfamiliar ideas, and try a different approach. That is the aixplain way: code freely, design freely, and build with safety and privacy in mind.
 
 Koder brings that idea to the work in front of you. Describe an app, work through a design, fix a stubborn bug, or understand an unfamiliar codebase. Choose a model, give it the tools it needs, and review what it produces.
 
