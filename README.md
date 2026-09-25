@@ -9,7 +9,7 @@
 Plan, code, and test with aiXplain, your own provider, or local models — in your terminal or desktop.
 
 [![Latest release](https://img.shields.io/github/v/release/aixplain/koder?color=ff6868&label=latest&sort=semver)](https://github.com/aixplain/koder/releases/latest)
-[![License: MIT](https://img.shields.io/badge/license-MIT-ff6868)](LICENSE)
+[![Copyright aiXplain](https://img.shields.io/badge/copyright-aiXplain-ff6f6c)](#copyright-and-licenses)
 
 <p align="center">
   <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-arm64.dmg"><img src="docs/assets/download-macos.svg" alt="Download Koder for macOS — Apple silicon" width="240" height="80"></a>
@@ -170,4 +170,10 @@ Desktop users can use the app's update controls or download the current installe
 - Check the [release notes](https://github.com/aixplain/koder/releases) for fixes and known limitations.
 - For security reports, email **help@aixplain.com**. Remove credentials and private project data before sharing logs or screenshots.
 
-This repository hosts Koder's public downloads and issue tracker. Koder is developed by [aiXplain](https://aixplain.com) and distributed under the [MIT license](LICENSE).
+This repository hosts Koder's public downloads and issue tracker. Koder is developed by [aiXplain](https://aixplain.com).
+
+## Copyright and licenses
+
+**© 2026 aiXplain. All rights reserved.**
+
+This notice applies to aiXplain-owned branding and original material, subject to any express license grants. Third-party and upstream components retain their respective licenses, copyright notices, and permissions. See [LICENSE](LICENSE) and the notices included with each distribution.

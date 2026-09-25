@@ -1,6 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="240" height="80" viewBox="0 0 240 80" role="img" aria-label="Download for Linux">
-<rect x="0.75" y="0.75" width="238.5" height="78.5" rx="13" fill="#19191C" stroke="#48484F" stroke-width="1.5"/>
-<rect x="15" y="18" width="3" height="44" rx="1.5" fill="#FF6F6C"/>
-<g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif"><text x="29" y="34" font-size="15" font-weight="600" fill="#FAFAFA">Download for Linux</text><text x="29" y="55" font-size="12" fill="#B4B4BC">x64 · AppImage</text></g>
-<path d="M216 30v18m-6-6 6 6 6-6" stroke="#FF6F6C" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="80" viewBox="0 0 240 80" role="img" aria-labelledby="title description">
+  <title id="title">Download Koder for Linux</title>
+  <desc id="description">x64 · AppImage</desc>
+  <rect x="0.75" y="0.75" width="238.5" height="78.5" rx="13" fill="#19191C" stroke="#48484F" stroke-width="1.5"/>
+  <g transform="translate(18 21)">
+    <path d="M16 3c-6 0-9 5-9 12 0 4-4 7-5 14-1 5 3 8 7 8h14c5 0 8-3 7-8-1-7-5-10-5-14 0-7-3-12-9-12Z" fill="#FAFAFA"/>
+    <path d="M16 5c-5 0-7 4-7 10 0 4-5 9-5 14 2 0 5-5 6-8-1 4-1 9 0 12h12c1-3 1-8 0-12 1 3 4 8 6 8 0-5-5-10-5-14 0-6-2-10-7-10Z" fill="#19191C"/>
+    <ellipse cx="16" cy="26" rx="7" ry="10" fill="#FAFAFA"/>
+    <ellipse cx="12.5" cy="13" rx="2.7" ry="3.7" fill="#FAFAFA"/>
+    <ellipse cx="19.5" cy="13" rx="2.7" ry="3.7" fill="#FAFAFA"/>
+    <ellipse cx="13" cy="13.5" rx="1" ry="1.6" fill="#19191C"/>
+    <ellipse cx="19" cy="13.5" rx="1" ry="1.6" fill="#19191C"/>
+    <path d="m11 17 5-3 5 3-5 3Z" fill="#FF6F6C"/>
+    <path d="m10 32-7 2-1 4h12l1-3Zm12 0 7 2 1 4H18l-1-3Z" fill="#FF6F6C"/>
+  </g>
+  <g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif">
+    <text x="62" y="24" font-size="11" fill="#B4B4BC">Download for</text>
+    <text x="62" y="45" font-size="19" font-weight="600" fill="#FAFAFA">Linux</text>
+    <text x="62" y="63" font-size="11" fill="#B4B4BC">x64 · AppImage</text>
+  </g>
+  <path d="M217 32v16m-5-5 5 5 5-5m-11 11h12" stroke="#FF6F6C" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
