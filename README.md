@@ -123,7 +123,7 @@ Choose your platform below, or use the [download page](https://koder.aixplain.co
 | Windows · x64 | [Download EXE](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-win-x64.exe) |
 | Linux · x64 | [DEB](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-amd64.deb) · [AppImage](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.AppImage) · [RPM](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.rpm) |
 
-**Signed and notarized:** the macOS app is signed with aiXplain's Developer ID and notarized by Apple, and the Windows installer is signed by aiXplain. Every release includes `SHA256SUMS` for checksum verification.
+**Signed and notarized:** the macOS app is signed with aixplain's Developer ID and notarized by Apple, and the Windows installer is signed by aixplain. Every release includes `SHA256SUMS` for checksum verification.
 
 For CLI archives, checksums, and previous versions, see [all releases](https://github.com/aixplain/koder/releases). Linux arm64 is available as a CLI download.
 
