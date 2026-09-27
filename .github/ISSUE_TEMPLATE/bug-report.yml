@@ -21,8 +21,8 @@ body:
   - type: input
     id: aixplain-code-version
     attributes:
-      label: aiXplain Code version
-      description: What version of aiXplain Code are you using?
+      label: aixplain Code version
+      description: What version of aixplain Code are you using?
     validations:
       required: false
 
