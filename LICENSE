@@ -22,8 +22,9 @@ their own license. Those components remain governed by their respective
 licenses. Preserve their copyright, license, and attribution notices.
 Separately licensed packages retain the license stated in that package.
 
-Koder includes code derived from opencode. The following MIT notice is
-preserved for that code and material previously distributed under this grant:
+Koder includes code derived from opencode (https://github.com/anomalyco/opencode).
+The following MIT notice is preserved for that code and material previously
+distributed under this grant:
 
 MIT License
 
