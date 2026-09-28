@@ -1,0 +1,1954 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Config",
+  "$defs": {
+    "LogLevel": {
+      "type": "string",
+      "enum": [
+        "DEBUG",
+        "INFO",
+        "WARN",
+        "ERROR"
+      ],
+      "description": "Log level"
+    },
+    "ServerConfig": {
+      "type": "object",
+      "properties": {
+        "port": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Port to listen on"
+        },
+        "hostname": {
+          "type": "string",
+          "description": "Hostname to listen on"
+        },
+        "mdns": {
+          "type": "boolean",
+          "description": "Enable mDNS service discovery"
+        },
+        "mdnsDomain": {
+          "type": "string",
+          "description": "Custom domain name for mDNS service (default: aixplainCode.local)"
+        },
+        "cors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Additional domains to allow for CORS"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ReferenceConfigEntry": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "description": "Git repository URL, host/path reference, or GitHub owner/repo shorthand"
+            },
+            "branch": {
+              "type": "string",
+              "description": "Branch or ref Scout should clone and inspect"
+            }
+          },
+          "required": [
+            "repository"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "Absolute path, ~/ path, or workspace-relative path to a local reference directory"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ReferenceConfig": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/ReferenceConfigEntry"
+      }
+    },
+    "PermissionActionConfig": {
+      "type": "string",
+      "enum": [
+        "ask",
+        "allow",
+        "deny"
+      ]
+    },
+    "PermissionObjectConfig": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/PermissionActionConfig"
+      }
+    },
+    "PermissionRuleConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PermissionActionConfig"
+        },
+        {
+          "$ref": "#/$defs/PermissionObjectConfig"
+        }
+      ]
+    },
+    "PermissionConfig": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PermissionActionConfig"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "read": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "edit": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "glob": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "grep": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "list": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "bash": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "task": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "external_directory": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "package_install": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "package_exec": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "git_push": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "git_destructive": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "integration_action": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "todowrite": {
+              "$ref": "#/$defs/PermissionActionConfig"
+            },
+            "verify": {
+              "$ref": "#/$defs/PermissionActionConfig"
+            },
+            "question": {
+              "$ref": "#/$defs/PermissionActionConfig"
+            },
+            "webfetch": {
+              "$ref": "#/$defs/PermissionActionConfig"
+            },
+            "websearch": {
+              "$ref": "#/$defs/PermissionActionConfig"
+            },
+            "repo_clone": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "repo_overview": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "lsp": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "doom_loop": {
+              "$ref": "#/$defs/PermissionActionConfig"
+            },
+            "skill": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "memories": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/PermissionRuleConfig"
+          }
+        }
+      ]
+    },
+    "AgentConfig": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "$ref": "https://models.dev/model-schema.json#/$defs/Model"
+        },
+        "variant": {
+          "type": "string",
+          "description": "Default model variant for this agent (applies only when using the agent's configured model)."
+        },
+        "temperature": {
+          "type": "number"
+        },
+        "top_p": {
+          "type": "number"
+        },
+        "prompt": {
+          "type": "string"
+        },
+        "tools": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          },
+          "description": "@deprecated Use 'permission' field instead"
+        },
+        "disable": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of when to use the agent"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "subagent",
+            "primary",
+            "all"
+          ]
+        },
+        "hidden": {
+          "type": "boolean",
+          "description": "Hide this subagent from the @ autocomplete menu (default: false, only applies to mode: subagent)"
+        },
+        "options": {
+          "type": "object"
+        },
+        "color": {
+          "anyOf": [
+            {
+              "pattern": "^#[0-9a-fA-F]{6}$",
+              "type": "string"
+            },
+            {
+              "type": "string",
+              "enum": [
+                "primary",
+                "secondary",
+                "accent",
+                "success",
+                "warning",
+                "error",
+                "info"
+              ]
+            }
+          ],
+          "description": "Hex color code (e.g., #FF5733) or theme color (e.g., primary)"
+        },
+        "steps": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Maximum number of agentic iterations before forcing text-only response"
+        },
+        "maxSteps": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "@deprecated Use 'steps' field instead."
+        },
+        "permission": {
+          "$ref": "#/$defs/PermissionConfig"
+        }
+      }
+    },
+    "ProviderConfig": {
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "env": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "id": {
+          "type": "string"
+        },
+        "npm": {
+          "type": "string"
+        },
+        "whitelist": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "blacklist": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "options": {
+          "type": "object",
+          "properties": {
+            "apiKey": {
+              "type": "string"
+            },
+            "baseURL": {
+              "type": "string"
+            },
+            "enterpriseUrl": {
+              "type": "string",
+              "description": "GitHub Enterprise URL for copilot authentication"
+            },
+            "setCacheKey": {
+              "type": "boolean",
+              "description": "Enable promptCacheKey for this provider (default false)"
+            },
+            "cacheTTL": {
+              "type": "string",
+              "enum": [
+                "5m",
+                "1h"
+              ],
+              "description": "Lifetime of the prompt-cache breakpoints on the stable system block. 1h (the default for Anthropic, and OpenRouter to Anthropic models) survives long tool runs; 5m keeps the provider default."
+            },
+            "timeout": {
+              "anyOf": [
+                {
+                  "exclusiveMinimum": 0,
+                  "type": "integer",
+                  "maximum": 9007199254740991
+                },
+                {
+                  "type": "boolean",
+                  "enum": [
+                    false
+                  ]
+                }
+              ],
+              "description": "Timeout in milliseconds for requests to this provider. Default is 300000 (5 minutes). Set to false to disable timeout."
+            },
+            "chunkTimeout": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Timeout in milliseconds between streamed SSE chunks for this provider. If no chunk arrives within this window, the request is aborted."
+            }
+          }
+        },
+        "models": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "family": {
+                "type": "string"
+              },
+              "release_date": {
+                "type": "string"
+              },
+              "attachment": {
+                "type": "boolean"
+              },
+              "reasoning": {
+                "type": "boolean"
+              },
+              "temperature": {
+                "type": "boolean"
+              },
+              "tool_call": {
+                "type": "boolean"
+              },
+              "recommended": {
+                "type": "boolean"
+              },
+              "priority": {
+                "type": "number"
+              },
+              "dataRetention": {
+                "type": "object",
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [
+                      "ZERO",
+                      "SEVENTY_TWO_HOURS",
+                      "THIRTY_DAYS",
+                      "UNKNOWN_PERIOD",
+                      "UNKNOWN"
+                    ]
+                  }
+                },
+                "required": [
+                  "mode"
+                ],
+                "additionalProperties": false
+              },
+              "interleaved": {
+                "anyOf": [
+                  {
+                    "type": "boolean",
+                    "enum": [
+                      true
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "field": {
+                        "type": "string",
+                        "enum": [
+                          "reasoning_content",
+                          "reasoning_details"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "field"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "cost": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "cache_read": {
+                    "type": "number"
+                  },
+                  "cache_write": {
+                    "type": "number"
+                  },
+                  "context_over_200k": {
+                    "type": "object",
+                    "properties": {
+                      "input": {
+                        "type": "number"
+                      },
+                      "output": {
+                        "type": "number"
+                      },
+                      "cache_read": {
+                        "type": "number"
+                      },
+                      "cache_write": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "input",
+                      "output"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "input",
+                  "output"
+                ],
+                "additionalProperties": false
+              },
+              "limit": {
+                "type": "object",
+                "properties": {
+                  "context": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "context",
+                  "output"
+                ],
+                "additionalProperties": false
+              },
+              "modalities": {
+                "type": "object",
+                "properties": {
+                  "input": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "text",
+                        "audio",
+                        "image",
+                        "video",
+                        "pdf"
+                      ]
+                    }
+                  },
+                  "output": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "text",
+                        "audio",
+                        "image",
+                        "video",
+                        "pdf"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "input",
+                  "output"
+                ],
+                "additionalProperties": false
+              },
+              "experimental": {
+                "type": "boolean"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "alpha",
+                  "beta",
+                  "deprecated",
+                  "active"
+                ]
+              },
+              "provider": {
+                "type": "object",
+                "properties": {
+                  "npm": {
+                    "type": "string"
+                  },
+                  "api": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "options": {
+                "type": "object"
+              },
+              "headers": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "variants": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "disabled": {
+                      "type": "boolean",
+                      "description": "Disable this variant for the model"
+                    }
+                  }
+                },
+                "description": "Variant-specific configuration"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "McpActivationConfig": {
+      "type": "object",
+      "properties": {
+        "keywords": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Words that activate this server. Until one appears, its tools stay out of the model's catalog."
+        },
+        "idle_turns": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Turns without a match before it goes dormant again (default: 3)."
+        }
+      },
+      "required": [
+        "keywords"
+      ],
+      "additionalProperties": false
+    },
+    "McpLocalConfig": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "local"
+          ],
+          "description": "Type of MCP server connection"
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Command and arguments to run the MCP server"
+        },
+        "environment": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Environment variables to set when running the MCP server"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable or disable the MCP server on startup"
+        },
+        "timeout": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Timeout in ms for MCP server requests. Defaults to 30000 (30 seconds) if not specified."
+        },
+        "activation": {
+          "$ref": "#/$defs/McpActivationConfig",
+          "description": "Keep this server dormant until a conversation keyword matches."
+        }
+      },
+      "required": [
+        "type",
+        "command"
+      ],
+      "additionalProperties": false
+    },
+    "McpOAuthConfig": {
+      "type": "object",
+      "properties": {
+        "clientId": {
+          "type": "string",
+          "description": "OAuth client ID. If not provided, dynamic client registration (RFC 7591) will be attempted."
+        },
+        "clientSecret": {
+          "type": "string",
+          "description": "OAuth client secret (if required by the authorization server)"
+        },
+        "scope": {
+          "type": "string",
+          "description": "OAuth scopes to request during authorization"
+        },
+        "redirectUri": {
+          "type": "string",
+          "description": "OAuth redirect URI (default: http://127.0.0.1:19876/mcp/oauth/callback)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "McpRemoteConfig": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "remote"
+          ],
+          "description": "Type of MCP server connection"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL of the remote MCP server"
+        },
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable or disable the MCP server on startup"
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Headers to send with the request"
+        },
+        "oauth": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/McpOAuthConfig"
+            },
+            {
+              "type": "boolean",
+              "enum": [
+                false
+              ]
+            },
+            {
+              "type": "boolean",
+              "enum": [
+                true
+              ]
+            }
+          ],
+          "description": "OAuth authentication configuration for the MCP server. Auto-detected by default; set to false to disable, or true to state it explicitly."
+        },
+        "timeout": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Timeout in ms for MCP server requests. Defaults to 30000 (30 seconds) if not specified."
+        },
+        "activation": {
+          "$ref": "#/$defs/McpActivationConfig",
+          "description": "Keep this server dormant until a conversation keyword matches."
+        }
+      },
+      "required": [
+        "type",
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "McpDisabledConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enabled"
+      ]
+    },
+    "ManagedConfig": {
+      "type": "object",
+      "properties": {
+        "mcp_allowlist": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "MCP server names policy permits. Anything else is listed but disabled."
+        },
+        "plugin_allowlist": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Plugins policy permits: an npm package name (any version of it), or the exact spec of anything else — a file:// URL, a git or tarball spec, an npm alias."
+        },
+        "provider_allowlist": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Provider ids policy permits. Bounds enabled_providers, so a provider supplied by an env key or auth.json is refused too."
+        },
+        "exceptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Names granted an explicit exception despite being outside an allowlist."
+        },
+        "pin_default_agent": {
+          "type": "string",
+          "description": "Agent a seat must start on; a local default_agent cannot move it."
+        }
+      },
+      "additionalProperties": false
+    },
+    "ResidencyConfig": {
+      "type": "object",
+      "properties": {
+        "regions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Region tags a host may carry, e.g. [\"eu\"]. Matched on host components, never as a substring."
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Hosts that may be contacted. \"*.vendor.com\" matches the bare domain too."
+        }
+      },
+      "additionalProperties": false
+    },
+    "RetentionConfig": {
+      "type": "object",
+      "properties": {
+        "days": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Days of audit history to keep."
+        }
+      },
+      "additionalProperties": false
+    },
+    "AuditConfig": {
+      "type": "object",
+      "properties": {
+        "record_allows": {
+          "type": "boolean",
+          "description": "Record permissions ALLOWED by a rule, not only refusals and answers given at the prompt. Off by default: an allow is written on the tool-call path, so a busy session pays a synchronous append per allowed call. Turn it on where the trail has to answer 'what was this agent allowed to do' rather than only 'what was it stopped from doing'."
+        },
+        "record_activity": {
+          "type": "boolean",
+          "description": "Record a tool.start/tool.end pair per tool call, with the outcome. Off by default: like record_allows, a busy session pays a synchronous append per call (two here). Turn it on where the trail has to answer 'what did this agent run, and did it succeed', which the permission records alone cannot — they cover only calls a rule stopped or a prompt decided. Tool arguments are not recorded (they can carry file contents and secrets)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "InstructionEntry": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Instruction file or glob"
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "always",
+            "fileMatch",
+            "manual"
+          ],
+          "description": "always (default): every request. fileMatch: only when a matching file is touched. manual: only when you name the file in your message."
+        },
+        "match": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "With fileMatch: globs that make this file relevant."
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "LayoutConfig": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "stretch"
+      ]
+    },
+    "ImageAttachmentConfig": {
+      "type": "object",
+      "properties": {
+        "auto_resize": {
+          "type": "boolean",
+          "description": "Resize images before sending them to the model when they exceed configured limits (default: true)"
+        },
+        "max_width": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Maximum image width before resizing or rejecting the attachment (default: 2000)"
+        },
+        "max_height": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Maximum image height before resizing or rejecting the attachment (default: 2000)"
+        },
+        "max_base64_bytes": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Maximum base64 payload bytes for an image attachment (default: 5242880)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "AttachmentConfig": {
+      "type": "object",
+      "properties": {
+        "image": {
+          "$ref": "#/$defs/ImageAttachmentConfig",
+          "description": "Image attachment configuration"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ConfigHookAgentAction": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "agent"
+          ]
+        },
+        "prompt": {
+          "type": "string",
+          "description": "Text injected into the running turn as guidance when this hook fires."
+        }
+      },
+      "required": [
+        "type",
+        "prompt"
+      ],
+      "additionalProperties": false
+    },
+    "ConfigHookEntry": {
+      "type": "object",
+      "properties": {
+        "command": {
+          "type": "string",
+          "description": "Command run through the shell. Receives the hook payload as JSON on stdin."
+        },
+        "action": {
+          "$ref": "#/$defs/ConfigHookAgentAction",
+          "description": "Inject a prompt into the running turn instead of running a command."
+        },
+        "match": {
+          "type": "string",
+          "description": "Wildcard matched against the tool name for tool.* hooks, the session id for chat.message, and the task subject for spec.task.*. Defaults to every event."
+        },
+        "timeout_ms": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Milliseconds before the hook command is killed (default: 30000)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ConfigHooks": {
+      "type": "object",
+      "properties": {
+        "tool.execute.before": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConfigHookEntry"
+          }
+        },
+        "tool.execute.after": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConfigHookEntry"
+          }
+        },
+        "chat.message": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConfigHookEntry"
+          }
+        },
+        "spec.task.start": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConfigHookEntry"
+          }
+        },
+        "spec.task.complete": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConfigHookEntry"
+          }
+        },
+        "session.turn_end": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConfigHookEntry"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "SandboxMode": {
+      "type": "string",
+      "enum": [
+        "read-only",
+        "workspace-write",
+        "danger-full-access"
+      ]
+    },
+    "NetworkMode": {
+      "type": "string",
+      "enum": [
+        "blocked",
+        "proxied"
+      ]
+    },
+    "NetworkRule": {
+      "type": "string",
+      "enum": [
+        "allow",
+        "deny"
+      ]
+    },
+    "Config": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "description": "JSON schema reference for configuration validation"
+        },
+        "shell": {
+          "type": "string",
+          "description": "Default shell to use for terminal and bash tool"
+        },
+        "logLevel": {
+          "$ref": "#/$defs/LogLevel",
+          "description": "Log level"
+        },
+        "server": {
+          "$ref": "#/$defs/ServerConfig",
+          "description": "Server configuration for Koder serve and web commands"
+        },
+        "command": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "template": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "agent": {
+                "type": "string"
+              },
+              "model": {
+                "type": "string",
+                "$ref": "https://models.dev/model-schema.json#/$defs/Model"
+              },
+              "subtask": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "template"
+            ],
+            "additionalProperties": false
+          },
+          "description": "Command configuration"
+        },
+        "skills": {
+          "type": "object",
+          "properties": {
+            "paths": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Additional paths to skill folders"
+            },
+            "urls": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "URLs to fetch skills from (e.g., https://example.com/.well-known/skills/)"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Additional skill folder paths"
+        },
+        "reference": {
+          "$ref": "#/$defs/ReferenceConfig",
+          "description": "Named git or local directory references that can be mentioned as @alias or @alias/path"
+        },
+        "watcher": {
+          "type": "object",
+          "properties": {
+            "ignore": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "snapshot": {
+          "type": "boolean",
+          "description": "Enable or disable snapshot tracking. When false, filesystem snapshots are not recorded and undoing or reverting will not undo/redo file changes. Defaults to true."
+        },
+        "trustedDirectories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Absolute directory paths that are trusted to run project-local config (MCP/LSP/formatter commands, plugins, provider overrides, permission changes including per-agent, auto-discovered agents/commands, {file:}/{env:} expansion). Set this only in your GLOBAL config; it is ignored from project-local config. See workspace trust (#121)."
+        },
+        "cli_auth_credentials_store": {
+          "type": "string",
+          "enum": [
+            "file",
+            "keyring",
+            "auto"
+          ],
+          "description": "Where CLI provider credentials are stored. OPT-IN — defaults to 'file' (auth.json at 0600; the OS keychain is never touched and no access prompt is shown). Set 'auto' to use the OS keychain when available/permitted and fall back to the 0600 file otherwise (including if you deny the access prompt), or 'keyring' to require the OS keychain (a login fails rather than writing a credential to disk). NOTE (macOS): until Koder ships a stable Developer ID signature, enabling the keychain prompts for access on EVERY launch (each build's code signature differs, so 'Always Allow' does not persist) — keep 'file' unless you have a signed build. A GLOBAL setting, read from your global config only; the KODER_AUTH_CREDENTIALS_STORE env var overrides it. See #125."
+        },
+        "plugin": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "array",
+                "prefixItems": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "object"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2
+              }
+            ]
+          }
+        },
+        "share": {
+          "type": "string",
+          "enum": [
+            "manual",
+            "auto",
+            "disabled"
+          ],
+          "description": "Control sharing behavior:'manual' allows manual sharing via commands, 'auto' enables automatic sharing, 'disabled' disables all sharing"
+        },
+        "autoshare": {
+          "type": "boolean",
+          "description": "@deprecated Use 'share' field instead. Share newly created sessions automatically"
+        },
+        "autoupdate": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string",
+              "enum": [
+                "notify"
+              ]
+            }
+          ],
+          "description": "Automatically update to the latest version. Set to true to auto-update, false to disable, or 'notify' to show update notifications"
+        },
+        "disabled_providers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Disable providers that are loaded automatically"
+        },
+        "enabled_providers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "When set, ONLY these providers will be enabled. All other providers will be ignored"
+        },
+        "model": {
+          "type": "string",
+          "description": "Model to use in the format of provider/model, eg anthropic/claude-2",
+          "$ref": "https://models.dev/model-schema.json#/$defs/Model"
+        },
+        "small_model": {
+          "type": "string",
+          "description": "Small model to use for tasks like title generation in the format of provider/model",
+          "$ref": "https://models.dev/model-schema.json#/$defs/Model"
+        },
+        "default_agent": {
+          "type": "string",
+          "description": "Default agent to use when none is specified. Must be a primary agent. Falls back to 'build' if not set or if the specified agent is invalid."
+        },
+        "username": {
+          "type": "string",
+          "description": "Custom username to display in conversations instead of system username"
+        },
+        "mode": {
+          "type": "object",
+          "properties": {
+            "build": {
+              "$ref": "#/$defs/AgentConfig"
+            },
+            "plan": {
+              "$ref": "#/$defs/AgentConfig"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/AgentConfig"
+          },
+          "description": "@deprecated Use `agent` field instead."
+        },
+        "agent": {
+          "type": "object",
+          "properties": {
+            "plan": {
+              "$ref": "#/$defs/AgentConfig"
+            },
+            "build": {
+              "$ref": "#/$defs/AgentConfig"
+            },
+            "general": {
+              "$ref": "#/$defs/AgentConfig"
+            },
+            "explore": {
+              "$ref": "#/$defs/AgentConfig"
+            },
+            "scout": {
+              "$ref": "#/$defs/AgentConfig"
+            },
+            "title": {
+              "$ref": "#/$defs/AgentConfig"
+            },
+            "summary": {
+              "$ref": "#/$defs/AgentConfig"
+            },
+            "compaction": {
+              "$ref": "#/$defs/AgentConfig"
+            }
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/AgentConfig"
+          },
+          "description": "Agent configuration"
+        },
+        "provider": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/ProviderConfig"
+          },
+          "description": "Custom provider configurations and model overrides"
+        },
+        "local_context": {
+          "type": "object",
+          "additionalProperties": {
+            "exclusiveMinimum": 0,
+            "type": "integer",
+            "maximum": 9007199254740991
+          },
+          "description": "Served context per local Ollama model, overriding the memory-aware default, e.g. {\"qwen3:8b\": 32768}. Global config only."
+        },
+        "mcp": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/McpLocalConfig"
+                  },
+                  {
+                    "$ref": "#/$defs/McpRemoteConfig"
+                  }
+                ]
+              },
+              {
+                "$ref": "#/$defs/McpDisabledConfig"
+              }
+            ]
+          },
+          "description": "MCP (Model Context Protocol) server configurations"
+        },
+        "formatter": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "disabled": {
+                    "type": "boolean"
+                  },
+                  "command": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "environment": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": "string"
+                    }
+                  },
+                  "extensions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          ],
+          "description": "Configure formatters. Built-ins are on by default (omit or true); set false to disable, or an object to keep built-ins with overrides."
+        },
+        "lsp": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "disabled": {
+                        "type": "boolean",
+                        "enum": [
+                          true
+                        ]
+                      }
+                    },
+                    "required": [
+                      "disabled"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "command": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "extensions": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "disabled": {
+                        "type": "boolean"
+                      },
+                      "env": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      },
+                      "initialization": {
+                        "type": "object"
+                      }
+                    },
+                    "required": [
+                      "command"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              }
+            }
+          ],
+          "description": "Configure LSP servers. Built-ins are on by default (omit or true); set false to disable, or an object to keep built-ins with overrides."
+        },
+        "managed": {
+          "$ref": "#/$defs/ManagedConfig",
+          "description": "Policy set by an administrator. A managed deny cannot be reopened by a project or CLI layer; a managed allow is only a default."
+        },
+        "managed_permission": {
+          "$ref": "#/$defs/PermissionConfig",
+          "description": "Permission rules set by policy. A deny here cannot be reopened by `permission` in a project or CLI layer; an allow is only a default."
+        },
+        "privacy": {
+          "type": "string",
+          "enum": [
+            "standard",
+            "controlled"
+          ],
+          "description": "Set safe defaults together. \"controlled\" turns off session sharing, release checks and memories; an explicit value for any of them still wins."
+        },
+        "residency": {
+          "$ref": "#/$defs/ResidencyConfig",
+          "description": "Restrict which hosts may be contacted. Fails closed: once set, anything not permitted is refused."
+        },
+        "retention": {
+          "$ref": "#/$defs/RetentionConfig",
+          "description": "How long local history is kept."
+        },
+        "audit": {
+          "$ref": "#/$defs/AuditConfig",
+          "description": "What the audit trail records."
+        },
+        "instructions": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "$ref": "#/$defs/InstructionEntry"
+              }
+            ]
+          },
+          "description": "Additional instruction files or patterns to include. A bare string is always included; the object form chooses when."
+        },
+        "layout": {
+          "$ref": "#/$defs/LayoutConfig",
+          "description": "@deprecated Always uses stretch layout."
+        },
+        "permission": {
+          "$ref": "#/$defs/PermissionConfig"
+        },
+        "tools": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "attachment": {
+          "$ref": "#/$defs/AttachmentConfig",
+          "description": "Attachment processing configuration, including image size limits and resizing behavior"
+        },
+        "enterprise": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "Enterprise URL"
+            }
+          },
+          "additionalProperties": false
+        },
+        "tool_output": {
+          "type": "object",
+          "properties": {
+            "max_lines": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Maximum lines of tool output before it is truncated and saved to disk (default: 2000)"
+            },
+            "max_bytes": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Maximum bytes of tool output before it is truncated and saved to disk (default: 20480)"
+            },
+            "max_request_bytes": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Largest output budget one shell call may ask for with max_output_bytes; a larger request is clamped to this (default: 4 x max_bytes)"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Thresholds for truncating tool output. When output exceeds either limit, the full text is written to the truncation directory and a preview is returned."
+        },
+        "shell_timeout": {
+          "type": "object",
+          "properties": {
+            "default_ms": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Timeout for a shell command when the model does not pass one (default: 120000)"
+            },
+            "max_ms": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Upper bound on a timeout the model passes; a larger value is clamped to this (default: 600000, or default_ms when that is larger)"
+            },
+            "hard_ms": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "A command still running at its timeout moves to the background instead of being stopped; it is stopped once this long has passed since it started (default: 1800000)"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Timeouts for foreground shell commands. Commands started with run_in_background are not subject to them."
+        },
+        "compaction": {
+          "type": "object",
+          "properties": {
+            "auto": {
+              "type": "boolean",
+              "description": "Enable automatic compaction when context is full (default: true)"
+            },
+            "prune": {
+              "type": "boolean",
+              "description": "Enable pruning of old tool outputs (default: true)"
+            },
+            "tail_turns": {
+              "minimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Number of recent user turns, including their following assistant/tool responses, to keep verbatim during compaction (default: 2)"
+            },
+            "preserve_recent_tokens": {
+              "minimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Maximum number of tokens from recent turns to preserve verbatim after compaction"
+            },
+            "reserved": {
+              "minimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Token buffer for compaction. Leaves enough window to avoid overflow during compaction."
+            },
+            "working_context": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Absolute token target for the working context: overflow and prune thresholds are measured against it instead of the model's context window (never above the model maximum minus reserved), so a large-window model compacts earlier without changing the model. Default: 160000; set it higher to use more of a large window."
+            }
+          },
+          "additionalProperties": false
+        },
+        "verify": {
+          "type": "object",
+          "properties": {
+            "command": {
+              "type": "string",
+              "description": "Shell command run after the model stops. A non-zero exit re-enters the turn with the output."
+            },
+            "max_attempts": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "How many times a failing verify may re-enter the turn before the turn ends anyway (default: 2)."
+            },
+            "timeout_seconds": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "How long the command may run before it is stopped and treated as a failure (default: 300). A gate with no bound parks the turn on a command that never exits."
+            }
+          },
+          "required": [
+            "command"
+          ],
+          "additionalProperties": false,
+          "description": "A verification gate: after the model stops, run this command, and if it fails, hand the output back and keep working until it passes or max_attempts is reached. Absent by default."
+        },
+        "hooks": {
+          "$ref": "#/$defs/ConfigHooks",
+          "description": "Shell commands run at hook points. Each entry receives the hook payload as JSON on stdin; exit code 2 blocks the action and its stderr is shown to the model."
+        },
+        "subagents": {
+          "type": "object",
+          "properties": {
+            "max_depth": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Maximum subagent nesting depth reachable through the task tool. A subagent spawned from a top-level session is depth 1 (default: 3)"
+            },
+            "max_concurrent": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Maximum number of subagents allowed to run at once in this project (default: 20)"
+            },
+            "mcp_tools": {
+              "type": "boolean",
+              "description": "Give built-in general subagents every MCP tool. Default false: a general subagent gets the built-in tools plus the tools of MCP servers its task prompt names (e.g. 'github'), which keeps its first request small."
+            },
+            "max_cost_usd": {
+              "type": "number",
+              "description": "Spend ceiling in USD for a session and its subagents. Checked on each spawn: once the tree has reached the ceiling the spawn is denied and that tree's running background subagents are halted. Unset means no ceiling."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Limits applied when the task tool spawns subagents."
+        },
+        "worktree": {
+          "type": "object",
+          "properties": {
+            "max_count": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Maximum number of subagent worktrees a project may keep on disk at once (default: 20). Kept and orphaned worktrees both count. Creating a new one is refused once the limit is reached until an existing worktree is removed, merged, or reaped by worktree.retention_hours."
+            },
+            "retention_hours": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Age in hours after which an idle worktree with no session currently running in it is eligible for automatic removal (unset, the default: never reap automatically). Checked opportunistically before a new worktree is created, not on a live timer."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Limits and cleanup policy for subagent worktrees kept on disk."
+        },
+        "goals": {
+          "type": "object",
+          "properties": {
+            "max_rounds": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Maximum autonomous rounds one goal may run (default: no limit — bounded by cost, time, and lack of progress)"
+            },
+            "blocked_after": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Consecutive rounds without progress before a goal is marked blocked (default: 3)"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Limits applied to autonomous goal rounds."
+        },
+        "sandbox": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "$ref": "#/$defs/SandboxMode",
+              "description": "How much a command the agent runs may change. read-only forbids all writes; workspace-write (default) allows writes inside the project and temp dirs; danger-full-access disables sandboxing."
+            },
+            "network": {
+              "type": "object",
+              "properties": {
+                "mode": {
+                  "$ref": "#/$defs/NetworkMode",
+                  "description": "blocked (default) cuts off egress entirely; proxied routes it through a local proxy that enforces the domain rules below."
+                },
+                "domains": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/$defs/NetworkRule"
+                  },
+                  "description": "Host rules under proxied mode, e.g. {\"github.com\": \"allow\", \"*.internal\": \"deny\"}. deny beats allow, and a host matching no rule is denied."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Egress policy for sandboxed commands."
+            },
+            "deny": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Globs the sandbox refuses to write even inside a writable root, e.g. [\"**/.env\", \"**/*.pem\"]."
+            },
+            "profile": {
+              "type": "string",
+              "description": "Name of the profile under `sandbox.profiles` to apply. Pinned by managed preferences when set there, since managed config is merged last."
+            },
+            "profiles": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "extends": {
+                    "type": "string",
+                    "description": "Another profile to inherit. Fields override; `deny` globs accumulate."
+                  },
+                  "mode": {
+                    "$ref": "#/$defs/SandboxMode"
+                  },
+                  "network": {
+                    "type": "object",
+                    "properties": {
+                      "mode": {
+                        "$ref": "#/$defs/NetworkMode"
+                      },
+                      "domains": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "$ref": "#/$defs/NetworkRule"
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "deny": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "description": "Named confinements, so a project can say `profile: \"locked-down\"` instead of repeating mode and domain rules."
+            }
+          },
+          "additionalProperties": false,
+          "description": "OS-level confinement for commands the agent runs. Network is not restricted."
+        },
+        "browser": {
+          "type": "object",
+          "properties": {
+            "remote": {
+              "type": "object",
+              "properties": {
+                "endpoint": {
+                  "type": "string",
+                  "description": "CDP websocket endpoint for a hosted browser, e.g. wss://vendor.test/cdp. Plaintext ws:// is refused for anything but loopback, because a CDP stream carries cookies and page contents."
+                },
+                "profile_sync": {
+                  "type": "boolean",
+                  "description": "Allow the agent to send your cookies and profile to the remote browser (default: false). Off means a remote browser starts signed into nothing."
+                }
+              },
+              "additionalProperties": false,
+              "description": "A hosted browser to drive instead of one on this machine."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Browser control settings."
+        },
+        "recordings": {
+          "type": "boolean",
+          "description": "Record browser sessions to .aixplain-code/recordings (default: false). A recording captures whatever is on the page, including anything you are signed into."
+        },
+        "memories": {
+          "type": "boolean",
+          "description": "Remember durable facts about this project across sessions (default: false). Artifacts are plain markdown you can read, edit, and delete."
+        },
+        "workflow": {
+          "type": "object",
+          "properties": {
+            "max_total_agents": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Maximum subagents one workflow run may spawn in total (default: 100)"
+            },
+            "max_concurrent_agents": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Maximum subagents a workflow run may have in flight at once (default: 8)"
+            },
+            "max_duration_ms": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Wall-clock ceiling for one workflow run in milliseconds (default: 1800000)"
+            }
+          },
+          "additionalProperties": false,
+          "description": "Limits applied to model-authored workflow runs."
+        },
+        "experimental": {
+          "type": "object",
+          "properties": {
+            "disable_paste_summary": {
+              "type": "boolean"
+            },
+            "openTelemetry": {
+              "type": "boolean",
+              "description": "Enable OpenTelemetry spans for AI SDK calls (using the 'experimental_telemetry' flag)"
+            },
+            "primary_tools": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Tools that should only be available to primary agents."
+            },
+            "continue_loop_on_deny": {
+              "type": "boolean",
+              "description": "Continue the agent loop when a tool call is denied"
+            },
+            "progress_budget": {
+              "minimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Model steps a turn may take without progress (no file changed, no new test or check result, no todo item completed; a newly read file counts for a few steps) before it pauses to ask whether to continue, or, with nobody to ask (koder run, subagents), stops with an error. Repeated sleep-and-check polls count double once the model has been told it is polling. 0 turns this off (default: 30)."
+            },
+            "root_budget": {
+              "type": "object",
+              "properties": {
+                "max_steps": {
+                  "exclusiveMinimum": 0,
+                  "type": "integer",
+                  "maximum": 9007199254740991,
+                  "description": "Model steps the root session and every descendant may take in total before the turn stops and asks to continue. Unlike --max-turns it does NOT reset on a new user turn or a new agent, and a subagent's steps count against it. Unset means no step ceiling."
+                },
+                "max_minutes": {
+                  "exclusiveMinimum": 0,
+                  "type": "integer",
+                  "maximum": 9007199254740991,
+                  "description": "Active elapsed minutes for the root session and its descendants before the turn stops and asks to continue. Time spent waiting for the user does not count. Unset means no time ceiling."
+                },
+                "max_cost_usd": {
+                  "type": "number",
+                  "description": "Known spend ceiling in USD for the root session and its descendants, counted during execution rather than only at spawn. Unset means no cost ceiling."
+                }
+              },
+              "additionalProperties": false,
+              "description": "One root-owned budget shared by a session and every descendant, across continuations and goal rounds. Off by default: nothing changes until it is set."
+            },
+            "mcp_timeout": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Timeout in milliseconds for model context protocol (MCP) requests"
+            },
+            "tool_ordering": {
+              "type": "string",
+              "enum": [
+                "parallel",
+                "serial-side-effects"
+              ],
+              "description": "How tool calls from one model reply run. parallel (default): all at once, as providers define parallel tool calls. serial-side-effects: shell, write/edit and other side-effecting calls run one at a time in the order the model emitted them; read-only calls stay concurrent."
+            },
+            "background_grace_ms": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Grace window in milliseconds for slow shell calls in a multi-call step. Once a shell command has run this long and every other call of the step has returned, it moves to the background and the model continues; its result arrives later as a wake-up message. Unset (default): the step waits for its slowest call. Not applied in subagent sessions, to writes or edits, or to calls awaiting permission."
+            },
+            "background_grace_single_call": {
+              "type": "boolean",
+              "description": "Also apply background_grace_ms when the shell command is the step's only tool call (default: false)."
+            },
+            "task_handoff_schema": {
+              "type": "boolean",
+              "description": "Require subagents launched with `task` to return a structured handoff — summary, what was left undone, discovered issues, files touched — instead of free-form prose. Off by default: it changes what every task caller receives."
+            },
+            "verification_evidence": {
+              "type": "boolean",
+              "description": "Record every completed shell run as durable verification evidence, so the todo completion gate is backed by a real process exit code rather than a scan of the transcript (default: true)."
+            },
+            "balance_breaker": {
+              "type": "boolean",
+              "description": "After an HTTP 471 / err.not_enough_balance, stop admitting NEW billable requests for the affected provider (account/team) until resumed, instead of issuing one failing request per concurrent child (default: true). In-flight requests finish; local providers and other accounts are unaffected."
+            },
+            "mid_turn_prune": {
+              "type": "boolean",
+              "description": "Clear old tool output mid-turn, at a completed step boundary, once the working window passes the prune threshold — instead of only after the whole turn. A long turn no longer retains its expanding history to the end. Default: true; set false to restore prune-after-turn only."
+            },
+            "deferred_tools": {
+              "type": "boolean",
+              "description": "Send tool names and short descriptions instead of every full JSON schema, and expose a tool_describe lookup to load one on demand. Smaller tool payload per request for large catalogs; the model can still call every tool, and calls are still validated against the real schema. Tools named in experimental.primary_tools keep their full schema. Unset (default): automatic, on once the tool catalog (including MCP tools) exceeds ~8k tokens, keeping the core built-in tools' schemas. false: always send full schemas. true: always defer."
+            },
+            "tool_search": {
+              "type": "boolean",
+              "description": "Experimental on-demand tool discovery. Hide non-primary tools until tool_search selects them; load their original schemas on the next request. Permissions still apply. Overrides deferred_tools. Off by default until benchmark validation."
+            },
+            "progress_observation": {
+              "type": "boolean",
+              "description": "Log repeated editing and steps without a new passing check. Observation only; does not stop or steer the agent. Off by default."
+            },
+            "stream_repetition_guard": {
+              "type": "boolean",
+              "description": "Experimental stop for sustained exact prose repetition within one model response. Does not inspect tool arguments or fenced code. Off by default; interrupted provider usage may remain unknown."
+            },
+            "check_feedback": {
+              "type": "boolean",
+              "description": "Experimental shell feedback when output reports failed checks despite exit zero. Does not alter exit status or execute extra commands. Off by default."
+            },
+            "request_attribution": {
+              "type": "boolean",
+              "description": "Log numeric sizes of the assembled prompt, selected schemas and replayed tool results on each request. Estimates, not provider billing. Off by default."
+            }
+          },
+          "additionalProperties": false
+        },
+        "review": {
+          "type": "object",
+          "properties": {
+            "effort": {
+              "type": "string",
+              "enum": [
+                "fast",
+                "balanced",
+                "thorough"
+              ],
+              "description": "Default review depth. fast = single-pass reviewer; balanced = relevant specialists + verification of high-severity findings; thorough = all specialists + verification of every finding."
+            },
+            "models": {
+              "type": "object",
+              "properties": {
+                "heavy": {
+                  "type": "string",
+                  "description": "Soft model pin (provider/model) for reasoning-heavy review agents (code review, verification). Falls back to the session model if not present in the catalog."
+                },
+                "light": {
+                  "type": "string",
+                  "description": "Soft model pin (provider/model) for lighter review agents (comments, types). Falls back to the session model if not present in the catalog."
+                }
+              },
+              "additionalProperties": false,
+              "description": "Optional per-tier model pins for review specialists."
+            },
+            "comment": {
+              "type": "boolean",
+              "description": "When reviewing a GitHub PR, post findings as inline review comments via `gh` (default: false)."
+            },
+            "verify_threshold": {
+              "type": "string",
+              "enum": [
+                "critical",
+                "important",
+                "suggestion"
+              ],
+              "description": "Minimum severity that triggers an adversarial verification pass at effort=balanced (default: important)."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Multi-specialist PR review configuration."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "allowComments": true,
+  "allowTrailingCommas": true
+}
