@@ -166,6 +166,9 @@
             "question": {
               "$ref": "#/$defs/PermissionActionConfig"
             },
+            "schedule": {
+              "$ref": "#/$defs/PermissionActionConfig"
+            },
             "webfetch": {
               "$ref": "#/$defs/PermissionActionConfig"
             },
