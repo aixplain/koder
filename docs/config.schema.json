@@ -1208,6 +1208,59 @@
           "description": "Small model to use for tasks like title generation in the format of provider/model",
           "$ref": "https://models.dev/model-schema.json#/$defs/Model"
         },
+        "auto_mode": {
+          "type": "object",
+          "properties": {
+            "model_slim": {
+              "type": "string",
+              "description": "Model for the 'slim' tier (routine, well-specified work) in the format of provider/model. Defaults to small_model."
+            },
+            "model_fast": {
+              "type": "string",
+              "description": "Model for the 'fast' tier (conversation and prose answers) in the format of provider/model. Defaults to the cheapest low-latency model in the catalog."
+            },
+            "model_fat": {
+              "type": "string",
+              "description": "Model for the 'fat' tier (hard design and reasoning) in the format of provider/model, and the model every fail-open path serves. Defaults to your default model."
+            },
+            "min_confidence": {
+              "minimum": 0,
+              "maximum": 1,
+              "type": "number",
+              "description": "Judge confidence below which a turn is served by your own model instead. The floor for every tier; 'slim' additionally has min_confidence_slim. Default 0.6, tuned against the pinned Jev version."
+            },
+            "min_confidence_slim": {
+              "minimum": 0,
+              "maximum": 1,
+              "type": "number",
+              "description": "Confidence the judge must have before a turn is routed to the 'slim' tier. Higher than min_confidence on purpose: sending hard work to the cheapest model is the costly mistake. Default 0.75, and never lower than min_confidence."
+            },
+            "timeout_ms": {
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "How long to wait for the tier judge before serving your own model. Default 2500."
+            },
+            "fallback": {
+              "type": "string",
+              "enum": [
+                "primary",
+                "heuristic"
+              ],
+              "description": "What to do when the judge is unavailable: 'primary' (default) serves your own model, 'heuristic' routes with an offline regex baseline."
+            },
+            "tool_id": {
+              "type": "string",
+              "description": "Id of the hosted tool wrapping the tier judge. Override only to pin a different judge build."
+            },
+            "base_url": {
+              "type": "string",
+              "description": "Model-platform chat base URL the judge endpoint is derived from. Set this to point auto mode at a dev marketplace."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Tuning for auto mode's tier classifier. Auto mode is turned on by selecting the 'auto-mode' model, not here."
+        },
         "default_agent": {
           "type": "string",
           "description": "Default agent to use when none is specified. Must be a primary agent. Falls back to 'build' if not set or if the specified agent is invalid."
