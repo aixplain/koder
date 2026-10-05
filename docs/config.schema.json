@@ -1259,7 +1259,7 @@
             }
           },
           "additionalProperties": false,
-          "description": "Tuning for auto mode's tier classifier. Auto mode is turned on by selecting the 'auto-mode' model, not here."
+          "description": "Tuning for Athena's (auto mode's) tier classifier. Athena is turned on by selecting the 'Athena' model (aixplain-dev/auto), not here."
         },
         "default_agent": {
           "type": "string",
