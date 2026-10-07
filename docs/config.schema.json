@@ -1932,11 +1932,11 @@
             },
             "deferred_tools": {
               "type": "boolean",
-              "description": "Send tool names and short descriptions instead of every full JSON schema, and expose a tool_describe lookup to load one on demand. Smaller tool payload per request for large catalogs; the model can still call every tool, and calls are still validated against the real schema. Tools named in experimental.primary_tools keep their full schema. Unset (default): automatic, on once the tool catalog (including MCP tools) exceeds ~8k tokens, keeping the core built-in tools' schemas. false: always send full schemas. true: always defer."
+              "description": "Send tool names and short descriptions instead of every full JSON schema, and expose a tool_describe lookup to load one on demand. Smaller tool payload per request for large catalogs; the model can still call every tool, and calls are still validated against the real schema. Tools named in experimental.primary_tools keep their full schema. Unset (default): automatic. Once MCP tools' schemas pass ~4k tokens, MCP tools are found on demand through tool_search (listing the connected servers) while every built-in tool keeps its full schema; otherwise this deferral turns on once the whole catalog exceeds ~8k tokens, keeping the core built-in tools' schemas. false: always send full schemas. true: always defer."
             },
             "tool_search": {
               "type": "boolean",
-              "description": "Experimental on-demand tool discovery. Hide non-primary tools until tool_search selects them; load their original schemas on the next request. Permissions still apply. Overrides deferred_tools. Off by default until benchmark validation."
+              "description": "Experimental on-demand discovery for every tool, built-ins included: hide non-primary tools until tool_search selects them; load their original schemas on the next request. Permissions still apply. Overrides deferred_tools. Off by default; large MCP catalogs are already searched by default (see deferred_tools)."
             },
             "progress_observation": {
               "type": "boolean",
