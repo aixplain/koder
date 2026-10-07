@@ -921,6 +921,88 @@
       },
       "additionalProperties": false
     },
+    "SpeechLocalConfig": {
+      "type": "object",
+      "properties": {
+        "model_path": {
+          "type": "string",
+          "description": "Absolute path to a ggml Whisper model file. Loads this file without a download or catalog hash check."
+        },
+        "models_dir": {
+          "type": "string",
+          "description": "Directory for downloaded speech models (default: <data>/speech/models)."
+        },
+        "platform_url": {
+          "type": "string",
+          "description": "Platform API base URL for Whisper model lookup (default: https://platform-api.aixplain.com)."
+        },
+        "gpu": {
+          "type": "boolean",
+          "description": "Use the GPU when the platform supports Metal (default: true on Apple silicon, false elsewhere)."
+        },
+        "threads": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "CPU threads for transcription (default: the smaller of 4 and available cores minus one)."
+        },
+        "idle_minutes": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Minutes without a transcription before Koder releases the loaded model (default: 10)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "SpeechConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Show dictation controls (default: true)."
+        },
+        "dictation_mode": {
+          "type": "string",
+          "enum": [
+            "dictate",
+            "push_to_talk",
+            "auto"
+          ],
+          "description": "Dictation behavior (default: \"dictate\")."
+        },
+        "auto_send_silence_ms": {
+          "exclusiveMinimum": 0,
+          "type": "integer",
+          "maximum": 9007199254740991,
+          "description": "Silence duration before Auto mode sends a phrase, in milliseconds (default: 800)."
+        },
+        "provider": {
+          "type": "string",
+          "description": "Speech provider id (default: \"local\")."
+        },
+        "model": {
+          "type": "string",
+          "description": "Model id (default: the selected provider's default)."
+        },
+        "language": {
+          "type": "string",
+          "description": "Language code or \"auto\" (default: \"auto\")."
+        },
+        "expected_languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Languages that may be spoken. When language is automatic and Whisper detects another language, Koder transcribes again in the first expected language."
+        },
+        "local": {
+          "$ref": "#/$defs/SpeechLocalConfig",
+          "description": "Settings for a local Whisper model."
+        }
+      },
+      "additionalProperties": false
+    },
     "ConfigHookAgentAction": {
       "type": "object",
       "properties": {
@@ -1513,6 +1595,10 @@
         "attachment": {
           "$ref": "#/$defs/AttachmentConfig",
           "description": "Attachment processing configuration, including image size limits and resizing behavior"
+        },
+        "speech": {
+          "$ref": "#/$defs/SpeechConfig",
+          "description": "Speech-to-text for the composer (global config only)"
         },
         "enterprise": {
           "type": "object",
