@@ -19,10 +19,10 @@ body:
       required: false
 
   - type: input
-    id: aixplain-code-version
+    id: koder-version
     attributes:
-      label: aixplain Code version
-      description: What version of aixplain Code are you using?
+      label: Koder version
+      description: What version of Koder are you using? (`koder --version`)
     validations:
       required: false
 
