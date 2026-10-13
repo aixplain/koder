@@ -192,6 +192,18 @@
             },
             "memories": {
               "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "browser": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "browser_submit": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "browser_site": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "browser_launch": {
+              "$ref": "#/$defs/PermissionRuleConfig"
             }
           },
           "additionalProperties": {
@@ -1888,6 +1900,28 @@
               },
               "additionalProperties": false,
               "description": "A hosted browser to drive instead of one on this machine."
+            },
+            "sites": {
+              "type": "string",
+              "enum": [
+                "ask",
+                "allowlist"
+              ],
+              "description": "\"ask\" (default): the first visit to each site asks, and \"Always allow\" remembers it. \"allowlist\": only the sites in `allowed` can be opened."
+            },
+            "allowed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Sites the agent may open without asking, as a host (portal.example.com), a scheme and host (https://portal.example.com) or a wildcard covering a domain and its subdomains (*.example.com). Ports are ignored."
+            },
+            "blocked": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Sites the agent may never open, in the same forms as `allowed`; a bare host also covers its subdomains. Blocked wins over allowed."
             }
           },
           "additionalProperties": false,
@@ -1982,6 +2016,25 @@
               "maximum": 9007199254740991,
               "description": "Timeout in milliseconds for model context protocol (MCP) requests"
             },
+            "native_turn_timeout": {
+              "type": "object",
+              "properties": {
+                "idle_ms": {
+                  "exclusiveMinimum": 0,
+                  "type": "integer",
+                  "maximum": 9007199254740991,
+                  "description": "A subscription agent turn (Codex, Claude Code, Cursor) that sends nothing for this long is stopped: no output, tool call or permission request. Time spent waiting on your answer to a permission prompt does not count (default: 300000)"
+                },
+                "max_ms": {
+                  "exclusiveMinimum": 0,
+                  "type": "integer",
+                  "maximum": 9007199254740991,
+                  "description": "Longest a subscription agent turn may run however busy it is (default: 3600000)"
+                }
+              },
+              "additionalProperties": false,
+              "description": "Deadlines for a turn driven by a subscription agent CLI. Stop always ends a turn at once."
+            },
             "tool_ordering": {
               "type": "string",
               "enum": [
@@ -2031,6 +2084,23 @@
             "stream_repetition_guard": {
               "type": "boolean",
               "description": "Experimental stop for sustained exact prose repetition within one model response. Does not inspect tool arguments or fenced code. Off by default; interrupted provider usage may remain unknown."
+            },
+            "stream_cutoff": {
+              "type": "object",
+              "properties": {
+                "retries": {
+                  "minimum": 0,
+                  "type": "integer",
+                  "maximum": 9007199254740991,
+                  "description": "Retries for a reply the provider closed before any content arrived, such as a gateway that drops a stream after a fixed silence while a reasoning model thinks. Each retry waits out the same silence, so the budget is small. 0 fails the turn at the first one (default: 2)."
+                },
+                "lower_effort": {
+                  "type": "boolean",
+                  "description": "On the first such cut-off of a reasoning model, retry one reasoning-effort step lower (for example high to medium), and say so in the status (default: true)."
+                }
+              },
+              "additionalProperties": false,
+              "description": "How a reply that the provider cut off before any content arrived is retried. Other transient errors (rate limits, server errors, unreachable providers) are not affected."
             },
             "check_feedback": {
               "type": "boolean",
