@@ -1187,10 +1187,24 @@
                 "type": "string"
               },
               "description": "URLs to fetch skills from (e.g., https://example.com/.well-known/skills/)"
+            },
+            "disabled": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Names of skills the agent is neither offered nor allowed to load. They stay listed, so they can be turned back on"
+            },
+            "removed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Names of built-in skills to leave out entirely. Kept by name, so an app update does not bring them back; a skill new to an update still appears"
             }
           },
           "additionalProperties": false,
-          "description": "Additional skill folder paths"
+          "description": "Extra skill sources, and which skills are turned off or removed"
         },
         "reference": {
           "$ref": "#/$defs/ReferenceConfig",
