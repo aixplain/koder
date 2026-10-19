@@ -190,6 +190,9 @@
             "skill": {
               "$ref": "#/$defs/PermissionRuleConfig"
             },
+            "skill_create": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
             "memories": {
               "$ref": "#/$defs/PermissionRuleConfig"
             },
@@ -1944,6 +1947,10 @@
         "recordings": {
           "type": "boolean",
           "description": "Record browser sessions to .aixplain-code/recordings (default: false). A recording captures whatever is on the page, including anything you are signed into."
+        },
+        "devices": {
+          "type": "boolean",
+          "description": "Let agents see and drive the iOS Simulator or Android Emulator you have running, through device_* tools that ask before each action (default: false)."
         },
         "memories": {
           "type": "boolean",
