@@ -1718,6 +1718,10 @@
               "maximum": 9007199254740991,
               "description": "Token buffer for compaction. Leaves enough window to avoid overflow during compaction."
             },
+            "idle": {
+              "type": "boolean",
+              "description": "Compact an idle session two minutes before its prompt cache lapses, when it holds at least 100K tokens of context. Only for models whose cache lifetime is known (Anthropic-wire). Default: false."
+            },
             "working_context": {
               "exclusiveMinimum": 0,
               "type": "integer",
