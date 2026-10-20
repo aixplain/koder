@@ -2113,11 +2113,11 @@
                   "minimum": 0,
                   "type": "integer",
                   "maximum": 9007199254740991,
-                  "description": "Retries for a reply the provider closed before any content arrived, such as a gateway that drops a stream after a fixed silence while a reasoning model thinks. Each retry waits out the same silence, so the budget is small. 0 fails the turn at the first one (default: 2)."
+                  "description": "Retries for a reply the provider closed before any content arrived, or after 30s or more of silence, such as a gateway that drops a stream after a fixed silence while a reasoning model thinks. Each retry waits out the same silence, so the budget is small. 0 fails the turn at the first one (default: 2)."
                 },
                 "lower_effort": {
                   "type": "boolean",
-                  "description": "On the first such cut-off of a reasoning model, retry one reasoning-effort step lower (for example high to medium), and say so in the status (default: true)."
+                  "description": "On the first such cut-off of a reasoning model, or the first one after 30s or more of silence even if some content arrived first, retry one reasoning-effort step lower (for example high to medium), and say so in the status (default: true)."
                 }
               },
               "additionalProperties": false,
