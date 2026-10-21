@@ -25,7 +25,7 @@ Describe the change you want in plain language. Koder reads your code, makes edi
 
 </div>
 
-![Koder desktop app: a session that fixed a SQL injection and ran the tests, with the two-file diff open in the Review panel](docs/assets/desktop-large-logo.png)
+![Koder desktop app: a request to fix a SQL injection, the steps Koder took to read, edit and test the code, and the two-file diff in the Review panel](docs/assets/desktop-large-logo.png)
 
 ## What is Koder?
 
@@ -82,7 +82,7 @@ Secret files such as `.env` always ask before they are read, including when the 
 
 ## Security scanning with Scan
 
-![Koder Scan listing six likely security issues by severity, with a SQL injection finding open beside the list showing what is wrong and how it is reached](docs/assets/scan.png)
+![Koder Scan listing four likely security issues by severity, with a SQL injection finding open beside the list showing what is wrong and how it is reached](docs/assets/scan.png)
 
 Scan reads a repository for security bugs and lists what it finds, worst first. Each finding explains what is wrong, traces step by step how an attacker's input reaches it, and can come with a proposed fix. Open **Security** from a project in the sidebar or from the command palette, or run `koder scan` in the terminal.
 
@@ -115,9 +115,9 @@ Connections are aixplain team assets. Verification and actions may use credits.
 
 The terminal app has the same agent, permissions and sessions as the desktop app, with keyboard and mouse control. Edits show as inline diffs, and a side panel tracks context, spend, changed files and tool use. Code is highlighted offline. Run `koder` in a project to open it, or `koder run` to use the agent from scripts and automation.
 
-| Home | Working session |
+| Home | A finished turn |
 | --- | --- |
-| ![The Koder terminal app home screen with the logo and the prompt](docs/assets/terminal-home.png) | ![The Koder terminal app mid-turn: a split diff of the new endpoint and its test, a running command, and the context, changes and tools panels](docs/assets/terminal.png) |
+| ![The Koder terminal app home screen with the logo, the prompt and recent sessions](docs/assets/terminal-home.png) | ![A finished turn in the Koder terminal app: the session title, the request, file reads, split diffs of the new endpoint and its test, the test run and Done, with the context, changes and tools panels](docs/assets/terminal.png) |
 
 Switch autonomy with `/auto` (`ask`, `rules`, `read-only`, `auto` or `full`), watch a pull request's checks with `/pr`, and steer a running turn without stopping its background commands.
 
