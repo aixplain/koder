@@ -157,6 +157,9 @@
             "integration_action": {
               "$ref": "#/$defs/PermissionRuleConfig"
             },
+            "agent_test": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
             "todowrite": {
               "$ref": "#/$defs/PermissionActionConfig"
             },
@@ -191,6 +194,9 @@
               "$ref": "#/$defs/PermissionRuleConfig"
             },
             "skill_create": {
+              "$ref": "#/$defs/PermissionRuleConfig"
+            },
+            "agent_config": {
               "$ref": "#/$defs/PermissionRuleConfig"
             },
             "memories": {
