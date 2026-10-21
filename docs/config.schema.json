@@ -1301,6 +1301,10 @@
           ],
           "description": "Automatically update to the latest version. Set to true to auto-update, false to disable, or 'notify' to show update notifications"
         },
+        "crashReports": {
+          "type": "boolean",
+          "description": "Send a crash report to aixplain when Koder crashes: the kind of error, where in Koder's code it happened, the Koder version, the operating system and an anonymous install id. Never your messages, files, folder names or keys. Off unless set to true. Read from your global config only; never sent while sharing is disabled, in CI, or with DO_NOT_TRACK=1."
+        },
         "disabled_providers": {
           "type": "array",
           "items": {
