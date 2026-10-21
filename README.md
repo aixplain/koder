@@ -2,14 +2,14 @@
 
 <img src="docs/assets/aixplain-mark.svg" alt="aixplain" width="64" height="64">
 
-# Koder — AI coding harness by aixplain
+# Koder
 
 **Safe to explore. Free to build.**
 
-An AI coding harness for turning ideas into working software, with permission checks, reviewable changes, and your choice of model: aixplain, your Claude, ChatGPT or Cursor plan, or a local model. Plus Omni, a personal assistant that works in your own accounts. For macOS, Windows, and Linux.
+Koder is aixplain's AI coding agent for your desktop and terminal. It reads your project, makes changes you can review line by line, runs your tests, and asks before it touches anything you have not cleared it to. Use aixplain's models, the Claude, ChatGPT or Cursor plan you already pay for, or a local model. Omni, the personal assistant in the same app, handles the work around the code.
 
-[![Latest release](https://img.shields.io/github/v/release/aixplain/koder?color=ff6868&label=latest&sort=semver)](https://github.com/aixplain/koder/releases/latest)
-[![Copyright aixplain](https://img.shields.io/badge/copyright-aixplain-ff6f6c)](#copyright-and-licenses)
+[![Latest release](https://img.shields.io/github/v/release/aixplain/koder?color=fe6b6f&label=latest&sort=semver)](https://github.com/aixplain/koder/releases/latest)
+[![Copyright aixplain](https://img.shields.io/badge/copyright-aixplain-fe6b6f)](#copyright-and-licenses)
 
 <p align="center">
   <a href="https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-arm64.dmg"><img src="docs/assets/download-macos-icon.svg" alt="Download Koder for macOS — Apple silicon" width="240" height="80"></a>
@@ -19,69 +19,77 @@ An AI coding harness for turning ideas into working software, with permission ch
 
 [Intel Mac](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-mac-x64.dmg) · [Linux DEB](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-amd64.deb) · [Linux RPM](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.rpm) · [All downloads](https://koder.aixplain.com/#download)
 
-[The aixplain way](#the-aixplain-way) · [Your subscriptions](#use-the-plans-you-already-pay-for) · [Omni](#omni-your-personal-assistant) · [Install the CLI](#install-the-cli) · [Get started](#get-started) · [Get help](#get-help)
+[Features](#what-koder-does) · [Your plans](#use-the-plans-you-already-pay-for) · [Install](#install) · [Get started](#get-started) · [Commands](#commands) · [Safety and privacy](#safety-and-privacy) · [Get help](#get-help)
 
 </div>
 
-## The aixplain way
+![Koder desktop: a session that fixed a SQL injection and ran the tests, with the two-file diff open in the Review panel](docs/assets/desktop-large-logo.png)
 
-Safety makes freedom possible. When you feel safe, you can take creative risks, explore unfamiliar ideas, and try a different approach. That's the aixplain way: built with uncompromising safety and privacy, so you can design and code with total freedom and peace of mind.
+## What Koder does
 
-Koder brings that idea to the work in front of you. Describe an app, work through a design, fix a stubborn bug, or understand an unfamiliar codebase. Choose a model, give it the tools it needs, and review what it produces.
+### Works in your project, and shows its work
 
-| Your freedom | How Koder supports it |
-| --- | --- |
-| **Put safety first** | Use tool permissions and workspace trust to set access boundaries. Review changes and interrupt a run when needed. |
-| **Build your way** | Start in plain language. Plan a feature, implement an interface, or work directly in code, from your terminal or desktop. |
-| **Choose your AI** | Use aixplain's model catalog, the Claude, ChatGPT or Cursor plan you already pay for, another supported provider, or a local model. |
-| **Make the work yours** | Bring project instructions, skills, and MCP tools. Resume saved sessions and review changes in your own project. |
+Describe the outcome you want. Koder reads the relevant files, edits them, runs your commands, and reads the results before it decides the next step. Every step stays in the conversation: what it read, what it changed, and what it ran. The Review panel collects the session's changes into one diff you can read, unified or split, and commit when you are satisfied.
 
-The harness makes these pieces work together: models, tools, context, permissions, and the steps between a request and a result. You choose the setup that fits the task. Hosted models and services may charge for usage.
+Start in plain language or with a starter task (explain this project, find and fix a bug, add a feature, write tests, review my changes, start from a pull request). Plan first with the planning agent, then let it build. Bring your own project instructions in `AGENTS.md`, plus skills, MCP servers and plugins.
 
-## Safety and privacy
+### You decide what it may do on its own
 
-Useful AI needs clear boundaries. Koder gives you permissions for tool actions, workspace trust for project configuration, and changes you can inspect before relying on them.
+![Koder asking before a shell command reads the .env file, with Deny and Allow buttons](docs/assets/desktop-permissions.png)
 
-- **Permission checks:** tool actions follow your configured policy. Inspect it with `koder inspect` when connecting tools or opening an unfamiliar project.
-- **Reviewable changes:** follow the work, inspect file changes, and check test results before accepting an outcome. You can interrupt a run.
-- **Local storage:** sessions and configuration are stored on your machine. Protect that local profile as you would your project files.
-- **Clear data boundaries:** hosted providers receive the inputs sent to them. A configured local model can keep inference local; connected tools may still send data to external services.
-- **You approve actions in your accounts:** when Omni wants to send, create, change or delete something through a connected account, it shows you the exact content and asks first, every time. There is no "always allow" for these.
-- **Zero data retention filter:** pick **ZDR only** in the model picker, or run `koder models --zdr`, to list only models the catalog reports as zero retention.
+Pick an access mode in the chat box:
 
-Choose your provider and tool settings to match the sensitivity of the task. See [configuration and updates](#configuration-and-updates) for local storage paths.
+- **Ask first:** asks before running commands or changing files.
+- **Auto:** follows your permission rules and asks only where they say to.
+- **Full access:** works without asking, except before spending money, deleting folders, force-deleting files, pushing, or reading secret files. It goes back to Auto when the app restarts.
 
-## AI coding in your desktop or terminal
-
-### Desktop
-
-Keep the conversation, project files, terminal commands, and code review in one workspace. Go from a request to a diff you can inspect.
-
-![Koder desktop showing a new session in an empty project](docs/assets/desktop-large-logo.png)
+Secret files such as `.env` always ask before they are read, in every mode, including when the read happens inside a shell command like `cat`, `grep` or `source`. The approval names the exact file, and "Always allow" covers only that file. Changes to the folders that define agents, modes and commands always ask too.
 
 <details>
-<summary>See desktop permissions</summary>
+<summary>See the access modes</summary>
 
-![Koder desktop permissions settings, grouped by tool capability](docs/assets/desktop-permissions.png)
+![The Permissions menu in the chat box: Ask first, Auto and Full access, each with a one-line description](docs/assets/desktop-access-modes.png)
 
 </details>
 
-<details>
-<summary>See Omni</summary>
+The terminal app offers the same idea with five levels through `/auto`: `ask`, `rules`, `read-only`, `auto` and `full`.
 
-![Omni desktop with starter prompts and the aixplain logo](docs/assets/omni.png)
+### Finds likely security bugs with Scan
 
-![Omni reading an inbox and showing the emails as a card](docs/assets/omni-cards.png)
+![Koder Scan listing six likely issues by severity, with one SQL injection finding open beside the list](docs/assets/scan.png)
 
-</details>
+Scan reads a repository for security bugs and lists what it finds, worst first. Each finding explains what is wrong, traces how an attacker's input reaches the bug step by step, and can come with a proposed fix. Open **Security** from a project in the sidebar or from the command palette, or run `koder scan` in the terminal.
 
-### Terminal
+Scan reads the code but does not run it yet, so every finding is marked as a likely issue, not a proven one. Review each one before you act on it. `koder scan` can write a SARIF report and exits with an error when it finds something at or above the severity you set with `--fail-on`, so it can gate a CI job.
 
-Stay close to your code with an interactive terminal interface, keyboard and mouse controls, and a CLI for scripts and automation.
+### Keeps every session in one place
 
-![Koder AI coding terminal with the crowned logo in an empty workspace](docs/assets/terminal.png)
+![The sessions sidebar: sessions waiting for you and running at the top, earlier sessions from two projects grouped under Today](docs/assets/sessions.png)
 
-*Screenshots show the development interface. See the [release notes](https://github.com/aixplain/koder/releases/latest) for features in the current download.*
+The sidebar holds the sessions from all your projects. Anything running or waiting on you sits at the top with a short status such as "waiting for you". The rest can be grouped by date or by project, or narrowed to one project. Sessions are saved on your machine, so you can come back to any of them.
+
+### Omni, your personal assistant
+
+![Omni home with a greeting, the chat box and the conversations to pick up](docs/assets/omni.png)
+
+Switch to **Omni** in the desktop app, or run `koder omni`. Omni takes on the work around the code: drafting, planning, making sense of documents and numbers, building agents, and working in the apps you connect.
+
+![Omni after writing an onboarding checklist: the steps folded into one line, the answer, and the document it saved](docs/assets/omni-cards.png)
+
+- **The answer comes first.** A finished turn folds its steps into one line, with the answer and any files it made right below.
+- **Works in your accounts.** Connect email, calendar, chat and project tools in **Omni settings → Connect your apps**. Anything that sends, creates, changes or deletes something is shown to you and approved one call at a time.
+- **Builds and runs agents.** Browse ready-made aixplain agents and your workspace's own on the Agents page, which shows how each one is built: its model, tools, skills, instructions and limits. Omni can also build a new agent with you.
+- **Picks up where you left off.** Omni home lists the chats stopped at an approval or a question, scheduled runs that failed, and the conversations you were last in.
+
+Connections are aixplain team assets. Verification and actions may use credits.
+
+### A terminal app that keeps up
+
+![The Koder terminal app after fixing a shell injection: tool steps, the passing test run, the summary, and the context, throughput and tools panels](docs/assets/terminal.png)
+
+The terminal app has the same agent, permissions and sessions, with keyboard and mouse control, a side panel for context, spend and tool use, and syntax highlighting that works offline. Use `koder run` for scripts and automation.
+
+The desktop app speaks 17 languages, including Arabic with a right-to-left layout.
 
 ## Use the plans you already pay for
 
@@ -93,28 +101,11 @@ Already pay for Claude, ChatGPT or Cursor? Use that plan in Koder. Koder runs ea
 | **ChatGPT** (Plus, Pro, Business) | [Codex CLI](https://github.com/openai/codex), signed in with `codex login` | Codex with the models your plan offers |
 | **Cursor** (paid plan) | Cursor's `cursor-agent`, signed in with `cursor-agent login` | Cursor's agent over ACP |
 
-Koder finds installed CLIs automatically, including ones behind version managers. Check where each one stands in **Settings → Providers → Your subscriptions**, or run:
+Koder finds installed CLIs automatically, including ones behind version managers. Check where each one stands in **Settings → Providers → Your subscriptions**, or run `koder providers subs`. Each shows Ready, Not signed in or Not installed, the account and plan, and the one command that fixes it. Usage counts against your plan's limits.
 
-```sh
-koder providers subs
-```
+## Install
 
-Each shows Ready, Not signed in or Not installed, the account and plan, and the one command that fixes it. Usage counts against your plan's limits.
-
-## Omni: your personal assistant
-
-Switch to **Omni** in the desktop app, or run `koder omni`. Omni takes work off your plate: drafting, planning, making sense of documents and numbers, and working in the apps you use every day.
-
-- **Works in your accounts.** Connect Gmail, Google Calendar, Slack, Jira, Linear and more in **Personalize Omni → Connect your apps**. Omni can read your inbox, check your calendar, draft and send email, and create or update tickets. Anything that sends, creates, changes or deletes is shown to you and approved one call at a time.
-- **Clear results.** Emails, events, tickets and messages appear as clean cards, and a live status line shows what Omni is doing.
-- **Knows your aixplain.** When you're signed in, Omni sees your team's agents, models, connections, knowledge bases and tools, so it can pick the right one. Browse them in **Personalize Omni → Your aixplain**.
-- **Yours to shape.** Review, edit or forget saved memory, schedule recurring prompts, and add skills. Omni greets you by your verified account name and keeps its own workspace, separate from your code projects.
-
-Connections are aixplain team assets. Verification and actions may use credits.
-
-## Download the desktop app
-
-Choose your platform below, or use the [download page](https://koder.aixplain.com/#download).
+### Desktop app
 
 | Your computer | Installer |
 | --- | --- |
@@ -123,11 +114,9 @@ Choose your platform below, or use the [download page](https://koder.aixplain.co
 | Windows · x64 | [Download EXE](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-win-x64.exe) |
 | Linux · x64 | [DEB](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-amd64.deb) · [AppImage](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.AppImage) · [RPM](https://github.com/aixplain/koder/releases/latest/download/aixplain-code-desktop-linux-x86_64.rpm) |
 
-**Signed and notarized:** the macOS app is signed with aixplain's Developer ID and notarized by Apple, and the Windows installer is signed by aixplain. Every release includes `SHA256SUMS` for checksum verification.
+The desktop app installs as **aixplain**, with Koder, Design and Omni inside it. The macOS app is signed with aixplain's Developer ID and notarized by Apple, and the Windows installer is signed by aixplain. Every release includes `SHA256SUMS` for checksum verification.
 
-For CLI archives, checksums, and previous versions, see [all releases](https://github.com/aixplain/koder/releases). Linux arm64 is available as a CLI download.
-
-## Install the CLI
+### Command line
 
 **macOS and Linux**
 
@@ -135,21 +124,19 @@ For CLI archives, checksums, and previous versions, see [all releases](https://g
 curl -fsSL https://github.com/aixplain/koder/releases/latest/download/install | bash
 ```
 
-**Windows — PowerShell**
+**Windows (PowerShell)**
 
 ```powershell
 irm https://github.com/aixplain/koder/releases/latest/download/install.ps1 | iex
 ```
 
-Use the PowerShell command on Windows. The installer places `koder` in `~/.koder/bin` and adds it to your user PATH. Open a new terminal after installation.
-
-CLI builds are available for macOS arm64/x64, Linux arm64/x64, and Windows x64. To inspect the installer before running it, download [`install`](https://github.com/aixplain/koder/releases/latest/download/install) or [`install.ps1`](https://github.com/aixplain/koder/releases/latest/download/install.ps1).
+The installer places `koder` in `~/.koder/bin` and adds it to your user PATH. Open a new terminal after installation. CLI builds are available for macOS arm64/x64, Linux arm64/x64 and Windows x64. To read the installer before running it, download [`install`](https://github.com/aixplain/koder/releases/latest/download/install) or [`install.ps1`](https://github.com/aixplain/koder/releases/latest/download/install.ps1). For archives and previous versions, see [all releases](https://github.com/aixplain/koder/releases).
 
 ## Get started
 
-1. **Open a project.** Choose a folder in the desktop app, or run `koder` from your project directory.
-2. **Connect a model.** Sign in to aixplain or configure a supported provider. An aixplain API key can also provide model access; account billing requires sign-in.
-3. **Give it a concrete task.** Describe the outcome and any constraints. Review proposed actions, answer questions, and inspect the resulting diff.
+1. **Open a project.** Choose a folder in the desktop app, or run `koder` in your project directory.
+2. **Connect a model.** Sign in to aixplain, connect a plan you already have, or configure another provider. An aixplain API key also gives model access; billing needs a signed-in account.
+3. **Give it a concrete task.** Say what done looks like and any constraints, then follow the steps, answer its questions and review the diff.
 
 ```sh
 cd your-project
@@ -160,7 +147,7 @@ Try a task like:
 
 > Find why this test fails, explain the cause, make the smallest fix, and run the relevant tests.
 
-For aixplain account access from the CLI:
+To use your aixplain account from the CLI:
 
 ```sh
 koder login
@@ -168,50 +155,41 @@ koder whoami
 koder models
 ```
 
-You can manage providers with `koder providers`. Available models and tools depend on your provider, account, and configuration.
+## Commands
 
-## How the Koder agent harness works
-
-A model supplies the reasoning. Koder's harness connects it to the work: files to inspect, tools to use, permissions to follow, and session history to carry forward. It lets an agent run a command, read the result, and use that evidence in its next step.
-
-For you, that means a task can move from investigation to edits to tests in the same conversation. You can follow the work, answer a question, interrupt a run, and inspect the result.
-
-| Capability | What you can do |
+| Command | What it does |
 | --- | --- |
-| **Code and test** | Read and search files, edit code, execute project commands, and inspect their output. |
-| **Plan and delegate** | Use the planning agent to investigate a change, then switch to implementation. Delegate focused work to subagents. |
-| **Keep context** | Resume saved sessions and provide project instructions through `AGENTS.md`. |
-| **Choose models** | Use aixplain's catalog, your Claude, ChatGPT or Cursor plan, or another supported provider. Every model shows its maker's logo. |
-| **Act in your apps** | Omni reads and acts through connected accounts, with your approval for every change. |
-| **Connect tools** | Add MCP servers, skills, and plugins for the tools your workflow needs. |
-| **Review actions** | Configure permissions and workspace trust, inspect effective policy, and review file changes. |
-| **Use credits** | View the selected team's wallet and manage billing through Stripe-hosted pages. |
-
-## Work from the command line
-
-### Useful commands
-
-| Command | Purpose |
-| --- | --- |
-| `koder run "Explain this project"` | Run a prompt from the shell. |
-| `koder run --agent plan "Plan this change"` | Start a task with the planning agent. |
-| `koder run --model <provider/model> "…"` | Select a model for a run. |
-| `koder omni` | Open Omni, your personal assistant, in the terminal. |
-| `koder providers subs` | Check your Claude, ChatGPT and Cursor subscriptions. |
-| `koder models --zdr` | List models reported as zero data retention. |
+| `koder` | Open the terminal app in the current project. |
+| `koder run "Explain this project"` | Run a prompt from the shell. Add `--agent plan` to plan first, or `--model <provider/model>` to pick a model. |
+| `koder scan` | Scan the project for likely security bugs. Add `--sarif <file>` for a report and `--fail-on <severity>` to gate CI. |
+| `koder omni` | Open Omni in the terminal. |
+| `koder providers subs` | Check your Claude, ChatGPT and Cursor plans. |
+| `koder models --zdr` | List models the catalog reports as zero data retention. |
 | `koder session list` | List saved sessions. |
-| `koder import` | Import supported conversation histories. |
-| `koder mcp` | Manage MCP tool connections. |
-| `koder inspect` | Inspect the effective permission and policy configuration. |
-| `koder stats` | View recorded usage. |
-| `koder serve` | Start an HTTP server for clients and integrations. |
+| `koder import` | Import sessions from a share file or another coding agent. |
+| `koder mcp` | Manage MCP servers. |
+| `koder inspect` | Show the effective permission policy and which layer set each value. |
+| `koder stats` | Show token usage and cost. |
+| `koder billing` | View credits, top up, or add a card. |
+| `koder doctor` | Check the install, config, storage, providers and recent logs. |
+| `koder serve` | Start a headless server for clients and integrations. |
 | `koder web` | Open the browser interface. |
 
-Run `koder --help` or `koder <command> --help` for the options supported by your installed version.
+Run `koder --help` or `koder <command> --help` for every command and option in your installed version.
 
-### Team credits and billing
+## Safety and privacy
 
-Open **Settings → Account** on desktop, use **`/billing`** in the terminal interface, or run:
+- **Permission checks.** Tool actions follow your access mode and permission rules. Run `koder inspect` to see the effective policy before connecting tools or opening an unfamiliar project, and use workspace trust to decide which projects' own configuration is honored.
+- **Limits that hold in every mode.** Even Full access asks before pushing, deleting folders, force-deleting files, spending money and reading secrets. Scheduled runs refuse these and record why.
+- **Reviewable changes.** Follow each step, read the diff and check test results before you accept the outcome. You can stop a run at any time.
+- **Local storage.** Sessions and configuration stay on your machine. Protect that profile as you would your project files.
+- **Clear data boundaries.** Hosted providers receive the inputs sent to them. A local model keeps inference on your machine; connected tools may still send data to their services. The scan key and the local server password are kept out of the shells and tools Koder starts.
+- **Zero data retention filter.** Pick **ZDR only** in the model picker, or run `koder models --zdr`, to list only models the catalog reports as zero retention.
+- **Crash reports only if you want them.** They are off until you turn them on in **Settings → General → Privacy**, or set `"crashReports": true` in your global config. A report says what kind of error happened and where in Koder's code, never your messages, files, folder names or keys.
+
+## Team credits and billing
+
+Open **Settings → Account** in the desktop app, use `/billing` in the terminal app, or run:
 
 ```sh
 koder billing
@@ -219,11 +197,11 @@ koder billing top-up --amount 10
 koder billing add-card
 ```
 
-Koder shows the selected team before opening checkout. Payment details and final confirmation stay on Stripe's hosted page. Return to Koder and refresh the wallet to see the updated balance. Managing billing requires an eligible signed-in team role; an inference API key alone does not grant billing access.
+Koder shows the selected team before opening checkout, and payment details and final confirmation stay on the hosted payment page. Refresh the wallet in Koder afterwards to see the new balance. Managing billing needs an eligible signed-in team role; an inference API key alone does not grant billing access.
 
 ## Configuration and updates
 
-Use `AGENTS.md` in your repository for project instructions. Global configuration normally lives in `~/.config/koder/koder.json` or `koder.jsonc`; XDG environment settings can change these paths. Sessions and other local state are stored separately under `~/.local/share/koder`.
+Put project instructions in `AGENTS.md` in your repository. Global configuration lives in `~/.config/koder/koder.json` or `koder.jsonc`, and sessions and other local state live under `~/.local/share/koder`. XDG environment settings can change these paths.
 
 Update the CLI and check its version:
 
@@ -232,12 +210,12 @@ koder upgrade
 koder --version
 ```
 
-Desktop users can use the app's update controls or download the current installer. Release archives include `SHA256SUMS` for checksum verification. The `aixplain-code` command remains available as a compatibility alias.
+The desktop app checks for updates itself, or you can download the current installer. Upgrading keeps your sessions, saved permissions, schedules and theme. The `aixplain-code` command remains available as a compatibility alias.
 
 ## Get help
 
-- [Report a bug](https://github.com/aixplain/koder/issues/new/choose) with your version, operating system, reproduction steps, and expected result.
-- Check the [release notes](https://github.com/aixplain/koder/releases) for fixes and known limitations.
+- [Report a bug](https://github.com/aixplain/koder/issues/new/choose) with your version, operating system, steps to reproduce and the result you expected. `koder report` saves a bug report with the session, recent logs and version.
+- Read the [release notes](https://github.com/aixplain/koder/releases) for fixes and known limitations.
 - For security reports, email **help@aixplain.com**. Remove credentials and private project data before sharing logs or screenshots.
 
 This repository hosts Koder's public downloads and issue tracker. Koder is developed by [aixplain](https://aixplain.com).
