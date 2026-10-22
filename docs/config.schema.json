@@ -1376,11 +1376,11 @@
             },
             "base_url": {
               "type": "string",
-              "description": "Model-platform chat base URL the judge endpoint is derived from. Set this to point auto mode at a dev marketplace."
+              "description": "Model-platform chat base URL the judge endpoint is derived from. Set this to point AutoMode at a dev marketplace."
             }
           },
           "additionalProperties": false,
-          "description": "Tuning for Automode (Custom)'s local tier classifier. Select 'Automode (Custom)' (aixplain-dev/auto) to use it."
+          "description": "Tuning for AutoMode's local tier classifier. Select 'AutoMode' (aixplain-dev/auto) to use it."
         },
         "default_agent": {
           "type": "string",
