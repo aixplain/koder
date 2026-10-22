@@ -25,7 +25,9 @@ Describe the change you want in plain language. Koder reads your code, makes edi
 
 </div>
 
-![Koder desktop app: a request to fix a SQL injection, the steps Koder took to read, edit and test the code, and the two-file diff in the Review panel](docs/assets/desktop-large-logo.png)
+<p align="center">
+  <img src="docs/assets/desktop-signin.gif" width="800" alt="The aixplain desktop app's welcome screen in dark mode: the headline One app for code, everyday work and design, the Koder, Omni and Design modes, a Sign in with aixplain button, and a coral X of fine strands drawing itself in on the right">
+</p>
 
 ## What is Koder?
 
@@ -56,6 +58,8 @@ It runs as a desktop app with three modes (Koder for code, Design for screens an
 ## AI coding agent on your desktop
 
 Open a folder and start with a plain-language task, or pick a starter: explain this project, find and fix a bug, add a feature, write tests, review my changes, or start from a pull request. Plan first with the planning agent, then let it build. The Review panel gathers everything the session changed so you can read it before you commit.
+
+![Koder desktop app: a request to fix a SQL injection, the steps Koder took to read, edit and test the code, and the two-file diff in the Review panel](docs/assets/desktop-large-logo.png)
 
 ![The sessions sidebar: sessions waiting for you and running at the top, earlier sessions from two projects grouped under Today](docs/assets/sessions.png)
 
