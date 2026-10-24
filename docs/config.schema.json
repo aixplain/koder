@@ -1445,6 +1445,18 @@
           },
           "description": "Custom provider configurations and model overrides"
         },
+        "reply_style": {
+          "type": "string",
+          "enum": [
+            "technical",
+            "plain"
+          ],
+          "description": "How technical Koder's replies are. \"technical\" (the default) is written for engineers; \"plain\" uses everyday words, puts the outcome first and leaves out code unless it is asked for. Global config only."
+        },
+        "user_role": {
+          "type": "string",
+          "description": "Your role, in your own words (for example \"marketing manager\" or \"backend engineer\"). Koder fits its examples and level of detail to it. Optional; global config only."
+        },
         "local_context": {
           "type": "object",
           "additionalProperties": {
