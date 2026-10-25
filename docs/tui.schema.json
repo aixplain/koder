@@ -38206,6 +38206,15 @@
       ],
       "description": "Control diff rendering style: 'auto' adapts to terminal width, 'stacked' always shows single column"
     },
+    "mascot": {
+      "type": "string",
+      "enum": [
+        "pip",
+        "saguaro",
+        "potted"
+      ],
+      "description": "Which cactus keeps you company: pip (round, the default), saguaro (tall, arms raised) or potted (a ball in its pot)"
+    },
     "mouse": {
       "type": "boolean",
       "description": "Enable or disable mouse capture (default: true). Set to false if the TUI reacts to cursor movement you didn't intend — keyboard scrolling keeps working and your terminal's native text selection comes back."
