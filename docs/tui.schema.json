@@ -6745,7 +6745,7 @@
               }
             }
           ],
-          "description": "Steer: interrupt the running turn and send this message now"
+          "description": "Send now: this message, or with an empty prompt the queued ones, without waiting for the step"
         },
         "session_background": {
           "anyOf": [
