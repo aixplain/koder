@@ -668,6 +668,24 @@
           },
           "description": "Environment variables to set when running the MCP server"
         },
+        "cwd": {
+          "type": "string",
+          "description": "Folder to run the MCP server in, absolute or relative to the project. Defaults to the project folder."
+        },
+        "enabled_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Only these of the server's tools are offered to the model. Omit to offer all of them."
+        },
+        "disabled_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "These of the server's tools are never offered to the model, even when listed in enabled_tools."
+        },
         "enabled": {
           "type": "boolean",
           "description": "Enable or disable the MCP server on startup"
@@ -735,6 +753,20 @@
             "type": "string"
           },
           "description": "Headers to send with the request"
+        },
+        "enabled_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Only these of the server's tools are offered to the model. Omit to offer all of them."
+        },
+        "disabled_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "These of the server's tools are never offered to the model, even when listed in enabled_tools."
         },
         "oauth": {
           "anyOf": [
@@ -818,6 +850,43 @@
         "pin_default_agent": {
           "type": "string",
           "description": "Agent a seat must start on; a local default_agent cannot move it."
+        },
+        "default_plugins": {
+          "type": "boolean",
+          "description": "On an organization's server: whether the plugins bundled with the app (ChatGPT, Copilot, Cloudflare, Azure, DigitalOcean sign-in) load. On by default, each only where the provider it signs in to is allowed. False turns them all off."
+        },
+        "external_skills": {
+          "type": "boolean",
+          "description": "On an organization's server: whether skills from outside its Library load (the laptop's own skill folders, a project's skill files, skills.paths and skills.urls). On by default. False limits skills to the Library and the bundled ones."
+        },
+        "mcp_local": {
+          "type": "boolean",
+          "description": "On an organization's server: whether a member may run MCP servers as processes on their computer. Off by default. MCP servers in this managed config are always the admin's and always allowed."
+        },
+        "mcp_remote_hosts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "On an organization's server: hosts a member may connect remote MCP servers on, e.g. [\"tools.acme.com\", \"*.mcp.acme.com\"]. None by default. These hosts are also added to the hosts the app may contact."
+        },
+        "browser_tool": {
+          "type": "boolean",
+          "description": "On an organization's server: whether Koder and Omni may use a browser on this computer (the built-in browser or Use my browser). Off by default. When on, only the sites in browser.allowed open, unless browser.sites in this managed config says \"ask\"."
+        },
+        "personal_workspace": {
+          "type": "boolean",
+          "description": "On an organization's server: whether a member may use a personal workspace there, outside the organization's own workspaces. Off by default."
+        },
+        "autonomy": {
+          "type": "string",
+          "enum": [
+            "supervised",
+            "safe",
+            "workspace",
+            "full"
+          ],
+          "description": "On an organization's server: the most autonomy a member may give Koder and Omni. \"supervised\" asks before every action, \"safe\" approves only safe ones, \"workspace\" runs goals inside the project, \"full\" also outside it. Default \"full\": every level, with the shell rules and the sandbox applied in each. A member may always choose less."
         }
       },
       "additionalProperties": false
@@ -1118,11 +1187,12 @@
         "danger-full-access"
       ]
     },
-    "NetworkMode": {
+    "SandboxNetworkMode": {
       "type": "string",
       "enum": [
         "blocked",
-        "proxied"
+        "proxied",
+        "unrestricted"
       ]
     },
     "NetworkRule": {
@@ -1234,6 +1304,33 @@
         "snapshot": {
           "type": "boolean",
           "description": "Enable or disable snapshot tracking. When false, filesystem snapshots are not recorded and undoing or reverting will not undo/redo file changes. Defaults to true."
+        },
+        "linked": {
+          "type": "object",
+          "properties": {
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "claude-code",
+                  "codex",
+                  "cursor",
+                  "opencode"
+                ]
+              },
+              "description": "Other coding tools whose setup Koder reads where it lives (MCP servers, commands, rules, skills, agents): \"claude-code\", \"codex\", \"cursor\", \"opencode\". Nothing is copied or written back. Defaults to [\"claude-code\"]."
+            },
+            "off": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Linked items turned off, by id: \"mcp:<name>\", \"command:<name>\", \"rule:<file>\", \"agent:<name>\". A linked skill is turned off through skills.disabled."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Read another coding tool's setup in place. Set this in your GLOBAL config; it is ignored from project config."
         },
         "trustedDirectories": {
           "type": "array",
@@ -1859,8 +1956,8 @@
               "type": "object",
               "properties": {
                 "mode": {
-                  "$ref": "#/$defs/NetworkMode",
-                  "description": "blocked (default) cuts off egress entirely; proxied routes it through a local proxy that enforces the domain rules below."
+                  "$ref": "#/$defs/SandboxNetworkMode",
+                  "description": "blocked cuts off egress entirely; proxied routes it through a local proxy that enforces the domain rules below; unrestricted sets no limit. Unset, commands reach the network as they would without Koder, except on an organization's server, where only an administrator's unrestricted opens it."
                 },
                 "domains": {
                   "type": "object",
@@ -1900,7 +1997,7 @@
                     "type": "object",
                     "properties": {
                       "mode": {
-                        "$ref": "#/$defs/NetworkMode"
+                        "$ref": "#/$defs/SandboxNetworkMode"
                       },
                       "domains": {
                         "type": "object",
