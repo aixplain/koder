@@ -2067,6 +2067,17 @@
           "additionalProperties": false,
           "description": "Browser control settings."
         },
+        "design": {
+          "type": "object",
+          "properties": {
+            "unsandboxed_browser": {
+              "type": "boolean",
+              "description": "Open designs (design render and export) in a browser without its sandbox where the system gives it none: a user other than root in a container without user namespaces. Off by default, where such a design is refused. Without the sandbox a browser bug reaches your files, so the browser also runs without JIT, WebAssembly, GPU and WebGL. Read only from your own config and managed config; a project's is ignored."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Design tool settings."
+        },
         "recordings": {
           "type": "boolean",
           "description": "Record browser sessions to .aixplain-code/recordings (default: false). A recording captures whatever is on the page, including anything you are signed into."
