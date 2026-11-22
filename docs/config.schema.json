@@ -362,9 +362,41 @@
               "type": "string",
               "enum": [
                 "5m",
+                "1h",
+                "24h"
+              ],
+              "description": "Lifetime of the prompt cache on the stable system block. 1h (the default for Anthropic, and OpenRouter to Anthropic models) survives long tool runs; 5m keeps the provider default; 24h is OpenAI's extended retention, sent to OpenAI Responses models only. A value the provider has no field for is not sent. A model's or variant's setting overrides the provider's."
+            },
+            "tailCacheTTL": {
+              "type": "string",
+              "enum": [
+                "5m",
                 "1h"
               ],
-              "description": "Lifetime of the prompt-cache breakpoints on the stable system block. 1h (the default for Anthropic, and OpenRouter to Anthropic models) survives long tool runs; 5m keeps the provider default."
+              "description": "Lifetime of the prompt cache on the conversation itself (its last messages). 5m (the default) keeps the provider default; 1h keeps a conversation cached through a pause of up to an hour, at 2x the input price for what each turn writes instead of 1.25x, and keeps the system block an hour too. Sent only to Anthropic-style caches (Anthropic, Bedrock, OpenRouter). A model's or variant's setting overrides the provider's."
+            },
+            "tls": {
+              "type": "object",
+              "properties": {
+                "cert": {
+                  "type": "string",
+                  "description": "The client certificate, PEM. Usually {file:/path/client.pem}."
+                },
+                "key": {
+                  "type": "string",
+                  "description": "Its private key, PEM. Usually {file:/path/client.key}."
+                },
+                "passphrase": {
+                  "type": "string",
+                  "description": "The key's passphrase, when it is encrypted. Usually {env:NAME}."
+                }
+              },
+              "required": [
+                "cert",
+                "key"
+              ],
+              "additionalProperties": false,
+              "description": "A client certificate for a gateway that requires mutual TLS, presented on model requests and on the model list, and only to a server that asks for one. A project's config can set it only in a folder you trust."
             },
             "timeout": {
               "anyOf": [
@@ -610,6 +642,23 @@
                     "disabled": {
                       "type": "boolean",
                       "description": "Disable this variant for the model"
+                    },
+                    "cacheTTL": {
+                      "type": "string",
+                      "enum": [
+                        "5m",
+                        "1h",
+                        "24h"
+                      ],
+                      "description": "Lifetime of the prompt cache on the stable system block. 1h (the default for Anthropic, and OpenRouter to Anthropic models) survives long tool runs; 5m keeps the provider default; 24h is OpenAI's extended retention, sent to OpenAI Responses models only. A value the provider has no field for is not sent. A model's or variant's setting overrides the provider's."
+                    },
+                    "tailCacheTTL": {
+                      "type": "string",
+                      "enum": [
+                        "5m",
+                        "1h"
+                      ],
+                      "description": "Lifetime of the prompt cache on the conversation itself (its last messages). 5m (the default) keeps the provider default; 1h keeps a conversation cached through a pause of up to an hour, at 2x the input price for what each turn writes instead of 1.25x, and keeps the system block an hour too. Sent only to Anthropic-style caches (Anthropic, Bedrock, OpenRouter). A model's or variant's setting overrides the provider's."
                     }
                   }
                 },
@@ -933,6 +982,10 @@
         "record_activity": {
           "type": "boolean",
           "description": "Record a tool.start/tool.end pair per tool call, with the outcome. Off by default: like record_allows, a busy session pays a synchronous append per call (two here). Turn it on where the trail has to answer 'what did this agent run, and did it succeed', which the permission records alone cannot — they cover only calls a rule stopped or a prompt decided. Tool arguments are not recorded (they can carry file contents and secrets)."
+        },
+        "required": {
+          "type": "boolean",
+          "description": "Every action must be recorded: an action whose audit record can't be written waits for it, and after a minute is refused, and no record is dropped. A record of something already done is kept writing; at a normal exit Koder waits up to 10 seconds for those and says on the next start if any were lost. For an organization's managed policy. Off by default: a record that can't be written is logged, the person is told once, and the agent goes on."
         }
       },
       "additionalProperties": false
@@ -1327,6 +1380,10 @@
                 "type": "string"
               },
               "description": "Linked items turned off, by id: \"mcp:<name>\", \"command:<name>\", \"rule:<file>\", \"agent:<name>\". A linked skill is turned off through skills.disabled."
+            },
+            "claude_home": {
+              "type": "boolean",
+              "description": "Whether Koder uses your own Claude Code settings and skills (~/.claude and ~/.claude.json: skills, agents, commands, rules, CLAUDE.md, hooks, MCP servers). Unset until you answer Koder's one-time question; nothing there is read until this is true. A project's own .claude folder is not covered: it follows workspace trust."
             }
           },
           "additionalProperties": false,
@@ -1401,6 +1458,14 @@
         "crashReports": {
           "type": "boolean",
           "description": "Send a crash report to aixplain when Koder crashes: the kind of error, where in Koder's code it happened, the Koder version, the operating system and an anonymous install id. Never your messages, files, folder names or keys. Off unless set to true. Read from your global config only; never sent while sharing is disabled, in CI, or with DO_NOT_TRACK=1."
+        },
+        "sessionBackup": {
+          "type": "boolean",
+          "description": "Back up each chat to your own aixplain account, as desktop/sessions/<chat id>.zip, replaced on every upload: the chat, its sub-agents, Koder's log lines from its active time (credential shapes redacted) and its errors. The desktop app uploads a changed chat every 2 minutes and after an error or a finished turn; an unchanged chat uploads nothing. Unset, the app asks at the first error; false, it never uploads on its own. Read from your global config only."
+        },
+        "analytics": {
+          "type": "boolean",
+          "description": "Let the desktop app tell aixplain when it is first opened on this computer, under an anonymous install id, and when you sign in, under your aixplain account id: with the platform, processor, version and release channel, whether the account is aixplain's own and whether the install was there before these events. Never your email, name, messages, files, folder or repository names, and PostHog keeps no IP address or location. Off unless set to true: the desktop app asks once. Read from your global config only; never sent from an organization's own server, while sharing is disabled, in CI, or with DO_NOT_TRACK=1."
         },
         "disabled_providers": {
           "type": "array",
@@ -1546,9 +1611,10 @@
           "type": "string",
           "enum": [
             "technical",
+            "explained",
             "plain"
           ],
-          "description": "How technical Koder's replies are. \"technical\" (the default) is written for engineers; \"plain\" uses everyday words, puts the outcome first and leaves out code unless it is asked for. Global config only."
+          "description": "How technical Koder's replies are. \"technical\" (the default) is written for engineers; \"explained\" keeps the code and commands but says in a clause what each command and term does, for people learning; \"plain\" uses everyday words, puts the outcome first and leaves out code unless it is asked for. Global config only."
         },
         "user_role": {
           "type": "string",
@@ -1926,6 +1992,19 @@
           "additionalProperties": false,
           "description": "Limits and cleanup policy for subagent worktrees kept on disk."
         },
+        "schedules": {
+          "type": "object",
+          "properties": {
+            "keep_transcripts": {
+              "minimum": 0,
+              "type": "integer",
+              "maximum": 9007199254740991,
+              "description": "Transcripts a schedule that opens a new chat on every run keeps, newest first (default: 50, at most 100; 0 keeps every one). An older one is removed after a run, unless someone opened, continued, renamed, archived, shared, forked or pinned it. A schedule that runs in one chat (/loop) keeps that chat."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Scheduled runs."
+        },
         "goals": {
           "type": "object",
           "properties": {
@@ -2226,7 +2305,7 @@
             },
             "deferred_tools": {
               "type": "boolean",
-              "description": "Send tool names and short descriptions instead of every full JSON schema, and expose a tool_describe lookup to load one on demand. Smaller tool payload per request for large catalogs; the model can still call every tool, and calls are still validated against the real schema. Tools named in experimental.primary_tools keep their full schema. Unset (default): automatic. Once MCP tools' schemas pass ~4k tokens, MCP tools are found on demand through tool_search (listing the connected servers) while every built-in tool keeps its full schema; otherwise this deferral turns on once the whole catalog exceeds ~8k tokens, keeping the core built-in tools' schemas. false: always send full schemas. true: always defer."
+              "description": "Send tool names and short descriptions instead of every full JSON schema, and expose a tool_describe lookup to load one on demand. Smaller tool payload per request for large catalogs; the model can still call every tool, and calls are still validated against the real schema. Tools named in experimental.primary_tools keep their full schema. Unset (default): automatic. Once MCP tools' schemas pass ~4k tokens, MCP tools are found on demand through tool_search (listing the connected servers) while every built-in tool keeps its full schema; otherwise this deferral turns on once the tools outside the core built-ins pass ~1k tokens, keeping the core built-in tools' schemas. false: always send full schemas. true: always defer."
             },
             "tool_search": {
               "type": "boolean",
@@ -2247,7 +2326,7 @@
                   "minimum": 0,
                   "type": "integer",
                   "maximum": 9007199254740991,
-                  "description": "Retries for a reply the provider closed before any content arrived, or after 30s or more of silence, such as a gateway that drops a stream after a fixed silence while a reasoning model thinks. Each retry waits out the same silence, so the budget is small. 0 fails the turn at the first one (default: 2)."
+                  "description": "Retries for a reply the provider cut off: before any content arrived, partway through it, or after 30s or more of silence, such as a gateway that drops a stream after a fixed silence while a reasoning model thinks. Resending a stream the provider keeps cutting rarely helps, so the budget is small. 0 fails the turn at the first one (default: 2)."
                 },
                 "lower_effort": {
                   "type": "boolean",
