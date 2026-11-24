@@ -35,9 +35,9 @@ inputs:
     required: false
 
   version:
-    description: "Exact koder release to install (e.g. 0.3.11). Defaults to the release this action revision was verified against; any other version must publish SHA256SUMS."
+    description: "Exact koder release to install (e.g. 0.5.8). Defaults to the release this action revision was verified against; any other version must publish SHA256SUMS."
     required: false
-    default: "0.3.11"
+    default: "0.5.8"
 
   oidc_base_url:
     description: "Base URL for OIDC token exchange API. Only required when running a custom GitHub App install. Defaults to https://api.aixplain.com"
@@ -59,18 +59,18 @@ runs:
         # published `digest`. Bump them together with the `version` default:
         #   gh api repos/aixplain/koder/releases/tags/v<version> \
         #     --jq '.assets[] | select(.name|test("^koder-")) | "\(.name) \(.digest)"'
-        PINNED_VERSION: "0.3.11"
+        PINNED_VERSION: "0.5.8"
         PINNED_SUMS: |
-          7b15dde25e3ea1020bda68daa7639438b9c88227f19a6aed16eba017ed13d30d  koder-darwin-arm64.tar.gz
-          9c0dc7e9cde0b0f95c77b2b36696fcab35ec4fee4db396e00a8e63048093bf18  koder-darwin-x64.tar.gz
-          928500871ba973c9ca182c322fe1c1f8aa63273ffd015ae477220459e66e57d4  koder-linux-arm64.tar.gz
-          1a13f2c74be32cdec05f5a92fb6d678462700334f3c33bb811388f5a67b66e0b  koder-linux-x64.tar.gz
-          f6df4012127f55c2175b34d285c2ce29c753438b5bbb84e67c37f54d04fb0314  koder-windows-x64.tar.gz
+          fe7f5c291eec02ad85e9382744f0f5a665e4962fbc9af7f6413242ca6c6a1355  koder-darwin-arm64.tar.gz
+          98bad30e84e1965e037354a22fc5e65a9eb9084387f3537634ac1a85b6941c1f  koder-darwin-x64.tar.gz
+          32bbb892a5ee88264ef38d54d7c5e13d4558a6652556bac6e31b78c30dd0b1ab  koder-linux-arm64.tar.gz
+          459934c5cc80655049f0d2eb0fc1085d1d3834fd06b7a17eff377cddb69782f9  koder-linux-x64.tar.gz
+          94dbebc948e53791f0ddb99c22483e4c72030b59f0b085163a9310179f5d5b01  koder-windows-x64.tar.gz
       run: |
         set -euo pipefail
         version="${KODER_VERSION#v}"
         if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-.][0-9A-Za-z.]+)?$ ]]; then
-          echo "::error::version must be an exact release such as 0.3.11, got '${KODER_VERSION}'"
+          echo "::error::version must be an exact release such as 0.5.8, got '${KODER_VERSION}'"
           exit 1
         fi
         case "${RUNNER_OS}-${RUNNER_ARCH}" in
